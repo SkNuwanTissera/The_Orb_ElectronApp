@@ -17,15 +17,30 @@
 
   <style>
     #code {
-      width: 500px;
-      height: 500px;
+      /*max-width: calc(70% - ??px);*/
+      margin: 20px;
+      width: 75vw;
+      height: 55vh;
+      overflow-x: hidden;
       border: 1px solid #ccc;
-      background: #f5f5f5;
+      background: #3e3e3e;
+      word-wrap: break-word;
+        display: inline-flex;
     }
+
     .CodeFlask .CodeFlask__textarea {
       white-space: nowrap;
-      overflow-x: hidden;
+      overflow-x: auto;
     }
+
+      .CodeFlask__textarea {
+      }
+    .codeflask__flatten {
+      white-space: normal;
+    }
+
+
+
   </style>
 </head>
 
@@ -227,25 +242,16 @@
         <li class="breadcrumb-item">
           <a href="index.html">Dashboard</a>
         </li>
-        <li class="breadcrumb-item active">Blank Page</li>
+        <li class="breadcrumb-item active">Inline Code Editor</li>
       </ol>
       <div class="row">
         <div id="main" class="col-12">
           <!--<div ng-view></div>-->
-          <section id="content">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-6">
-                  <p id="status"></p>
-                  <p id="url"></p>
-                  <p id="sockid"></p>
-                  <p id="time"></p>
-                </div>
-
-                <div class="col-md-6">
-                  <div id="code"></div>
-                </div>
-
+                  <div class="col-md-12" id="code"></div>
+                  <div class="col-md-4">
+                    <button style="margin: 10px" class="btn btn-success"><i class="fa fa-save"></i> Done Editing</button>
+                    <button style="margin: 10px" class="btn btn-danger"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
+                  </div>
               </div>
             </div>
           </section>
@@ -283,8 +289,6 @@
         </div>
       </div>
     </div>
-
-
 
     <!--Orb Libraries-->
     <!-- Insert this line above script imports  -->
