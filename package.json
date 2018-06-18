@@ -1,0 +1,34 @@
+{
+  "name": "the_orb_electronapp",
+  "version": "1.0.0",
+  "description": "Cross platform enabled Client Software using electron for The_Orb ( Decentralized FaaS provider)",
+  "main": "main.js",
+  "dependencies": {
+    "codeflask": "^1.1.0",
+    "electron-reload": "^1.2.2",
+    "express": "^4.16.3",
+    "node": "^10.4.1",
+    "sweetalert": "^2.1.0"
+  },
+  "devDependencies": {
+    "angular-route": "^1.7.2",
+    "electron": "^2.0.1",
+    "javascript-obfuscator": "^0.16.0",
+    "node-persist": "^3.0.1",
+    "nodemon": "^1.17.4"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SkNuwanTissera/The_Orb_ElectronApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SkNuwanTissera/The_Orb_ElectronApp/issues"
+  },
+  "homepage": "https://github.com/SkNuwanTissera/The_Orb_ElectronApp#readme"
+}
