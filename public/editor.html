@@ -15,6 +15,8 @@
   <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+  <link href="../public/css/toaster.css" rel="stylesheet">
+
 
   <style>
     #code {
@@ -72,6 +74,9 @@
           </li>
           <li>
             <a href="cards.html">Seeding Functions</a>
+          </li>
+          <li>
+            <a href="cards.html">Inline Code Editor</a>
           </li>
         </ul>
       </li>
@@ -251,7 +256,7 @@
         <!--<div ng-view></div>-->
         <div class="col-md-12" id="code"></div>
         <div class="col-md-4">
-          <button style="margin: 10px" class="btn btn-success"><i class="fa fa-save"></i> Done Editing</button>
+          <button style="margin: 10px" class="btn btn-success" id="save" onclick=""><i class="fa fa-save"></i> Done Editing</button>
           <button style="margin: 10px" class="btn btn-danger" id="obfuscate"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
         </div>
       </div>
@@ -305,6 +310,7 @@
 <script src="js/sb-admin.min.js"></script>
 <script src="js/angular.min.js"></script>
 <script src="js/editor.js"></script>
+<!--<script src="js/store.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
