@@ -12,14 +12,13 @@ const url = require('url')
 
 let win
 
-
 function createWindow () {
     // Create the browser window.
     win = new BrowserWindow({width: 900, height: 600})
 
     // and load the index.html of the app.
     win.loadURL(url.format({
-        pathname: path.join(__dirname, 'public/editor.html'),
+        pathname: path.join(__dirname, 'public/orbwallet.html'),
         protocol: 'file:'
     }))
 
@@ -57,6 +56,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

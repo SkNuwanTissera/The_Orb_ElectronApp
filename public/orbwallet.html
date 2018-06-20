@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--<html ng-app="scotchApp" lang="en">-->
 <html lang="en">
 
 <head>
@@ -244,205 +243,82 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="index.html">Dashboard</a>
+        <a href="#">Dashboard</a>
       </li>
-      <li class="breadcrumb-item active">Inline Code Editor</li>
+      <li class="breadcrumb-item active">Wallet</li>
     </ol>
-    <div class="row">
-      <div id="main" class="col-12">
-        <!--<div ng-view></div>-->
-        <div class="col-md-12" id="code"></div>
-        <div class="col-md-8">
-          <button style="margin: 10px" class="btn btn-success" id="save" onclick=""><i class="fa fa-save"></i> Done Editing</button>
-          <button style="margin: 10px" class="btn btn-danger" id="obfuscate"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
-          <button style="margin: 10px" class="btn btn-danger" id="runcode"><i class="fa fa-send"></i> Run</button>
-          <button style="margin: 10px" class="btn btn-primary" id="deploy"><i class="fa fa-send"></i> Deploy</button>
-          <button style="margin: 10px" class="btn btn-primary" id="test"><i class="fa fa-send"></i> Test</button>
+    <!-- Example DataTables Card-->
+    <div class="card mb-3">
+      <div class="card-header">
+        <i class="fa fa-table"></i> Orb Wallet</div>
+      <div class="card-body">
+        <button id="check" class="btn btn-danger rounded">Add Function</button> <br/><br/>
+        <div class="table-responsive">
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead id="table">
+            <tr>
+              <th>Function ID</th>
+              <th>Description</th>
+              <th>Complexity</th>
+              <th>Cost</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    </div>
+  </div>
+  <!-- /.container-fluid-->
+  <!-- /.content-wrapper-->
+  <footer class="sticky-footer">
+    <div class="container">
+      <div class="text-center">
+        <small>Copyright © Your Website 2018</small>
+      </div>
+    </div>
+  </footer>
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fa fa-angle-up"></i>
+  </a>
+  <!-- Logout Modal-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
         </div>
       </div>
     </div>
-    </section>
   </div>
-</div>
-</div>
-<!-- /.container-fluid-->
-<!-- /.content-wrapper-->
-<footer class="sticky-footer">
-  <div class="container">
-    <div class="text-center">
-      <button class="btn btn-sm btn-danger" id="send">send</button>
-      <small>Copyright © Your Website 2018</small>
-    </div>
-  </div>
-</footer>
-<!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-  <i class="fa fa-angle-up"></i>
-</a>
-<!-- Logout Modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!--Orb Libraries-->
-<!-- Insert this line above script imports  -->
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin.min.js"></script>
-<script src="js/angular.min.js"></script>
-<script src="js/editor.js"></script>
-<!--<script src="js/store.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
-
-<script>
-    // let superUrl = "http://192.168.1.4:8200";
-    let superUrl = "http://192.168.1.4:8200";
-
-    let localUrl = "";
-    console.log(superUrl);
-    let socket = io.connect(superUrl);
-
-    socket.on('request',function (data) {
-        // console.log(data+'call');
-        // toast.success('Have fun server call!', data)
-    });
-
-    // var appInfo = clientInfo();
-    // console.log(appInfo);
-    var table = $('#table');
-
-    // getClientIp().then(function (ip) {
-    //     localUrl = "";
-    //     localUrl =ip+":8200";
-    //     console.log("Client Url [ local test] <"+localUrl+">")
-    //     setTimeout(function () {
-    //         // socket = io.connect(localUrl);
-    //     },5000)
-    // }).catch(e => console.error(e));
-
-
-    $(document).ready(function()
-    {
-        setInterval('clock()', 1000);
-        setInterval('http()',5000);
-    });
-
-
-
-    function clock() {
-        var currentTime = new Date ();
-        var currentHours = currentTime.getHours ( );
-        var currentMinutes = currentTime.getMinutes ( );
-        var currentSeconds = currentTime.getSeconds ( );
-        var currentTimeString = currentHours + ":" + currentMinutes + ":" + currentSeconds;
-        $('#time').html("Server Time : " + currentTimeString);
-        $('#url').html("Local IP : "+localUrl+"<br/> Super Node Public IP : "+superUrl);
-    }
-
-
-
-    function http()
-    {
-        // sendTestEmit();
-        $('#refresh').html('Refreshing.....');
-        console.log('Request Peer Route '+superUrl);
-        let peer_uri = superUrl+"/peers";
-        console.log('request to '+peer_uri);
-        $.ajax({
-            type:"GET",
-            cache:false,
-            url: peer_uri,
-            dataType:'json',
-            statusCode: {
-                404: function() {
-                    alert( "page not found" );
-                }
-            },
-            success:callback
-        }).done(function(data) {
-            console.log('--/>');
-        });
-    }
-
-    function callback (data)
-    {
-        $('#progressB').hide();
-
-        console.log(data);
-        table.empty();
-        for(i=0;i<data.length;i++){
-            id =data[i]["id"];
-            var tem = '<button class="btn btn-sm btn-outline-success" onclick="sendRequest(\'' + id + '\')">sample message</button>';
-            table.append('<tr scope="row"><th>'+i+'</th><th><input value="'+data[i]["id"]+'"></th><th>'+tem+'</th></tr>');
-            console.log(data[i])
-        }
-        $('#refresh').html('Available Peer List');
-    }
-
-    function sendTestEmit()
-    {
-        console.log('test emit');
-        socket.emit('client-request',JSON.stringify(client));
-    }
-
-    function sendRequest(val) {
-        console.log("Send Request to ");
-        AjaxToFunc(val);
-    }
-
-
-    function AjaxToFunc(val) {
-        let request_uri = superUrl+'/request';
-        console.log(request_uri);
-        $.ajax({
-            type:"POST",
-            cache:false,
-            url: request_uri,
-            dataType:'json',
-            data:{
-                id:val,
-                msg:'test'
-            },
-            statusCode: {
-                404: function() {
-                    alert( "page not found" );
-                }
-            },
-            success:function(msg){
-                console.log(msg);
-            }
-        }).done(function(data) {
-            console.log("request end");
-        });
-    }
-
-
-</script>
-
-
-
-<script>if (window.module) module = window.module;</script>
+  <!--Orb Libraries-->
+  <!-- Insert this line above script imports  -->
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/datatables/jquery.dataTables.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+  <!-- Custom scripts for this page-->
+  <script src="js/sb-admin-datatables.min.js"></script>
+  <script src="js/wallet.js"></script>
 </div>
 </body>
+
 </html>

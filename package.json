@@ -7,6 +7,7 @@
     "codeflask": "^1.1.0",
     "electron-reload": "^1.2.2",
     "express": "^4.16.3",
+    "js-interpreter": "^1.4.6",
     "node": "^10.4.1",
     "sweetalert": "^2.1.0"
   },
@@ -14,6 +15,7 @@
     "angular-route": "^1.7.2",
     "electron": "^2.0.1",
     "javascript-obfuscator": "^0.16.0",
+    "jsonfy": "^0.1.0",
     "node-persist": "^3.0.1",
     "nodemon": "^1.17.4"
   },

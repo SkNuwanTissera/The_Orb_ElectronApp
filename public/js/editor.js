@@ -2,6 +2,30 @@ var CodeFlask = require('codeflask');
 const storage = require('node-persist');
 const swal = require('sweetalert');
 var JavaScriptObfuscator = require('javascript-obfuscator');
+var Interpreter = require('js-interpreter');
+
+
+storage.init({
+    dir: process.cwd() +'/core/storage/_persist',
+
+    stringify: JSON.stringify,
+
+    parse: JSON.parse,
+
+    encoding: 'utf8',
+
+    logging: false,  // can also be custom logging function
+
+    ttl: false, // ttl* [NEW], can be true for 24h default or a number in MILLISECONDS
+
+    expiredInterval: 2 * 60 * 1000, // every 2 minutes the process will clean-up the expired cache
+
+    // in some cases, you (or some other service) might add non-valid storage files to your
+    // storage dir, i.e. Google Drive, make this true if you'd like to ignore these files and not throw an error
+    forgiveParseErrors: false
+
+})
+
 
 
 //code for editor
@@ -71,32 +95,7 @@ function get(){
 //code for json preparation and insert to db
 var save = $('#save');
 save.click(function() {
-    storage.init();
-    addData('34234234',flask.getCode()).then(console.log(getValues()));
-    toastr.success('Saved !! ', "")
-
-});
-
-//init storage
-storage.init({
-    dir: process.cwd() +'/core/storage/_persist',
-
-    stringify: JSON.stringify,
-
-    parse: JSON.parse,
-
-    encoding: 'utf8',
-
-    logging: false,  // can also be custom logging function
-
-    ttl: false, // ttl* [NEW], can be true for 24h default or a number in MILLISECONDS
-
-    expiredInterval: 2 * 60 * 1000, // every 2 minutes the process will clean-up the expired cache
-
-    // in some cases, you (or some other service) might add non-valid storage files to your
-    // storage dir, i.e. Google Drive, make this true if you'd like to ignore these files and not throw an error
-    forgiveParseErrors: false
-
+    addData(guid(),flask.getCode()).then(console.log(toastr.success('Saved !! ', "")));
 });
 
 function addData(id,data) {
@@ -105,4 +104,110 @@ function addData(id,data) {
 
 function getValues () {
     return storage.values();
+}
+
+function getItem() {
+    return storage.getItem('39c05122-476a-27d9-1cba-65dd76b9cc41');
+}
+
+// code for interpreter
+var run = $('#runcode');
+run.click(function() {
+    // getItem().then(function(value) {
+    //     console.log("DFG "+value);
+    // })
+    toastr.success('Code is Running !! ', "");
+    var myInterpreter = new Interpreter(getItem().then(function (value) {
+        return value;
+    }));
+    // var myInterpreter = new Interpreter(flask.getCode());
+    myInterpreter.run();
+    console.log("LOL :" +myInterpreter.value());
+});
+
+//generate UUID
+function guid() {
+    function _p8(s) {
+        var p = (Math.random().toString(16)+"000000000").substr(2,8);
+        return s ? "-" + p.substr(0,4) + "-" + p.substr(4,4) : p ;
+    }
+    return _p8() + _p8(true) + _p8(true) + _p8();
+}
+
+//deploy code
+var deploy = $('#deploy');
+deploy.click(function() {
+   sendPostRequest();
+});
+
+var baseurl = "http://192.168.1.4:8200";
+var userid = "3453ert";
+var functionid ="eferetet";
+
+
+//send POST request
+function sendPostRequest()
+{
+    let sentObj = (
+        function fibonacci(n, output) {
+    var a = 1, b = 1, sum;
+    for (var i = 0; i < n; i++) {
+        output.push(a);
+        sum = a + b;
+        a = b;
+        b = sum;
+    }});
+
+
+
+    let url = baseurl+"/user/"+userid+"/function/"+functionid;
+    console.log('request to '+url);
+    $.ajax({
+        type:"POST",
+        cache:false,
+        url: url,
+        contentType: 'application/json',
+        data: JSON.stringify({
+            name:"Bob",
+            fdata : sentObj.toString()
+        }),
+        dataType:'json',
+        statusCode: {
+            404: function() {
+                alert( "page not found" );
+            }
+        },
+        success:callback
+    }).done(function(data) {
+        console.log("POST RETURN DATA"+data);
+    });
+}
+
+
+//parse JSON files
+let x = (
+    function fibonacci(n, output) {
+        var a = 1, b = 1, sum;
+        for (var i = 0; i < n; i++) {
+            output.push(a);
+            sum = a + b;
+            a = b;
+            b = sum;
+        }});
+var str = x.toString();
+
+
+var test = $('#test');
+test.click(function() {
+    parseJSON(str);
+});
+
+function parseJSON(str) {
+    try
+    {
+        var obj = JSON.parse(str);// this is how you parse a string into JSON
+        console.log("data"+obj.fdata);
+    } catch (ex) {
+        console.error(ex);
+    }
 }
