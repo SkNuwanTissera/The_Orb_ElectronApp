@@ -128,23 +128,25 @@ deploy.click(function() {
 
     const fn = (flask.getCode());
 
-    const obj = {
-        id:1243,
-        name: "sentiment",
-        fnc: JSON.stringify({fn:fn.toString()})
-    }
-
+    // obj = {
+    //     id:1243,
+    //     name: "sentiment",
+    //     fnc: JSON.stringify({fn:fn.toString()})
+    // }
 
     let url = baseurl;
     console.log('request to '+url);
 
-    console.log(obj);
     $.ajax({
         type:"POST",
         cache:false,
         url: url,
-        data:fn,
-        dataType:"text",
+        data:{
+            "clientId": "adfjgffgdsg#RE%FGD$#dfghgfhDFfxcBBvcGfdGHT%$^#$DSFF",
+            "id": 113,
+            "name": "addAll",
+            "fn": "function add(param) {\n\tlet total = 0\n\tfor(let elem in param) {\n\t\ttotal += param[elem]\n\t}\n\n\treturn total\n\n}"
+        },
         statusCode: {
             404: function() {
                 alert( "page not found" );

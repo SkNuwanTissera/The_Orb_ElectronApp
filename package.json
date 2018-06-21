@@ -9,7 +9,8 @@
     "express": "^4.16.3",
     "js-interpreter": "^1.4.6",
     "node": "^10.4.1",
-    "sweetalert": "^2.1.0"
+    "sweetalert": "^2.1.0",
+    "node-sentiment": "0.0.6"
   },
   "devDependencies": {
     "angular-route": "^1.7.2",
