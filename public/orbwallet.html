@@ -45,7 +45,6 @@
 </head>
 
 <body  ng-controller="mainController" class="fixed-nav sticky-footer bg-dark" id="page-top">
-<!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
   <a class="navbar-brand" href="index.html">The Orb</a>
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,13 +65,10 @@
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents">
           <li>
-            <a href="navbar.html">Hosted Functions</a>
+            <a href="deployed.html">Available Functions</a>
           </li>
           <li>
-            <a href="cards.html">Seeding Functions</a>
-          </li>
-          <li>
-            <a href="cards.html">Inline Code Editor</a>
+            <a href="editor.html">Inline Code Editor</a>
           </li>
         </ul>
       </li>
@@ -83,17 +79,17 @@
         </a>
         <ul class="sidenav-second-level collapse" id="collapseExamplePages">
           <li>
-            <a href="login.html">Paid</a>
+            <a href="orbwallet.html">Payments</a>
           </li>
           <li>
-            <a href="register.html">Received</a>
+            <a href="wallet_dashboard.html">Wallet Dashboard</a>
           </li>
-          <li>
-            <a href="forgot-password.html">Rewards</a>
-          </li>
-          <li>
-            <a href="orb.html">Payment History</a>
-          </li>
+          <!--<li>-->
+          <!--<a href="forgot-password.html">Rewards</a>-->
+          <!--</li>-->
+          <!--<li>-->
+          <!--<a href="orb.html">Payment History</a>-->
+          <!--</li>-->
         </ul>
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -104,12 +100,6 @@
         <ul class="sidenav-second-level collapse" id="collapseMulti">
           <li>
             <a href="#">How to get initial coins?</a>
-          </li>
-          <li>
-            <a href="#">Second Level Item</a>
-          </li>
-          <li>
-            <a href="#">Second Level Item</a>
           </li>
           <li>
             <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
@@ -233,11 +223,12 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-          <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+          <i href="login.html" class="fa fa-fw fa-sign-out"></i>Logout</a>
       </li>
     </ul>
   </div>
 </nav>
+
 <div class="content-wrapper">
   <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -252,7 +243,7 @@
       <div class="card-header">
         <i class="fa fa-table"></i> Orb Wallet</div>
       <div class="card-body">
-        <button id="check" class="btn btn-danger rounded">Add Function</button> <br/><br/>
+        <!--<button id="check" href="editor.html" class="btn btn-danger rounded">Add Function</button> <br/><br/>-->
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead id="table">
@@ -317,6 +308,8 @@
   <script src="js/sb-admin.min.js"></script>
   <!-- Custom scripts for this page-->
   <script src="js/sb-admin-datatables.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="js/wallet.js"></script>
 </div>
 </body>

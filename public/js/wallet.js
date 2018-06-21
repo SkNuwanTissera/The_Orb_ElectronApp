@@ -1,6 +1,7 @@
 let storage = require('node-persist');
 var jsonfy = require('jsonfy');
 var Interpreter = require('js-interpreter');
+const swal = require('sweetalert');
 
 var table = $('#table');
 
@@ -25,7 +26,7 @@ storage.init({
 
 }).then(()=>{
     storage.forEach(async function(datum) {
-        table.append('<tr scope="row"><td>'+datum.key+'</td><td>'+datum.value+'</td><td><button id="check" class="btn btn-success rounded">Check</button></td><td><button class="btn btn-success rounded">Pay</button></td></tr>');
+        table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check" class="btn btn-success rounded">Check</button></td><td><button id="pay" class="btn btn-success rounded">Pay</button></td></tr>');
     });
 });
 
@@ -43,6 +44,29 @@ check.click(function() {
         console.timeEnd(x);
     }));
 });
+
+
+
+var pay = $('#pay');
+pay.click(function() {
+    console.log("SDSDSWDSD")
+        swal({
+            title: "Confirm Paying ?",
+            text: "\"This function costs 0.00001 per request based on complexity.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("You paid for the function !", {
+                        icon: "success",
+                    });
+                }
+            });
+
+});
+
 
 
 

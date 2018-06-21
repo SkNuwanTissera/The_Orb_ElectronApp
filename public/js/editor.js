@@ -71,27 +71,6 @@ send.click(function() {
 });
 
 
-function get(){
-    $.ajax({
-        type:"GET",
-        cache:false,
-        url: 'http://dfaas.herokuapp.com/peers',
-        dataType:'json',
-        statusCode: {
-            404: function() {
-                alert( "page not found" );
-            }
-        },
-        success:callback
-    }).done(function(data) {
-        console.log('--/>');
-    });
-
-    function callback(data) {
-        console.log(data);
-    }
-}
-
 //code for json preparation and insert to db
 var save = $('#save');
 save.click(function() {
@@ -134,54 +113,54 @@ function guid() {
     return _p8() + _p8(true) + _p8(true) + _p8();
 }
 
-//deploy code
-var deploy = $('#deploy');
-deploy.click(function() {
-   sendPostRequest();
-});
 
-var baseurl = "http://192.168.1.4:8200";
+
+var baseurl = "http://localhost:3001/";
 var userid = "3453ert";
 var functionid ="eferetet";
 
-
-//send POST request
-function sendPostRequest()
-{
-    let sentObj = (
-        function fibonacci(n, output) {
-    var a = 1, b = 1, sum;
-    for (var i = 0; i < n; i++) {
-        output.push(a);
-        sum = a + b;
-        a = b;
-        b = sum;
-    }});
+//deploy code
+let deploy = $('#deploy');
+deploy.click(function() {
+    //send POST request
+    console.log("DFDFDF");
 
 
+    const fn = (flask.getCode());
 
-    let url = baseurl+"/user/"+userid+"/function/"+functionid;
+    const obj = {
+        id:1243,
+        name: "sentiment",
+        fnc: JSON.stringify({fn:fn.toString()})
+    }
+
+
+    let url = baseurl;
     console.log('request to '+url);
+
+    console.log(obj);
     $.ajax({
         type:"POST",
         cache:false,
         url: url,
-        contentType: 'application/json',
-        data: JSON.stringify({
-            name:"Bob",
-            fdata : sentObj.toString()
-        }),
-        dataType:'json',
+        data:fn,
+        dataType:"text",
         statusCode: {
             404: function() {
                 alert( "page not found" );
             }
         },
-        success:callback
+        success:function (data) {
+            console.log('function post request success')
+            console.log(data)
+        }
     }).done(function(data) {
         console.log("POST RETURN DATA"+data);
     });
-}
+});
+
+
+
 
 
 //parse JSON files
