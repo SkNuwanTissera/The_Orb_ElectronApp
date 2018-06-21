@@ -6,7 +6,9 @@ const swal = require('sweetalert');
 var table = $('#table');
 
 storage.init({
+    //initiate the persist object ( the function deployed as a object)
     dir: process.cwd() +'/core/storage/_persist',
+
 
     stringify: JSON.stringify,
 
@@ -34,21 +36,22 @@ storage.init({
 var check = $('#check');
 check.click(function() {
 
-    console.log(storage.getItem('d3a76c70-d828-064f-4c5c-a984d2f8a553').then(function (data) {
+    console.log(storage.getItem('8088fa3c-1945-013a-c409-6b4b1d989b01').then(function (data) {
         console.log(data)
-        var x= data;
-        var myInterpreter = new Interpreter(x);
         console.log(myInterpreter);
         console.time(x);
-        x();
+        function x(){
+            eval("("+data+")");
+        }
         console.timeEnd(x);
+        swal("Execution Time : ")
     }));
 });
 
 
 
-var pay = $('#pay');
-pay.click(function() {
+var sd = $('#sd');
+sd.click(function() {
     console.log("SDSDSWDSD")
         swal({
             title: "Confirm Paying ?",
