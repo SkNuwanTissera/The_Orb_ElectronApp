@@ -1,0 +1,63 @@
+ <!--If you have special style-->
+<style>
+    #code {
+      /*max-width: calc(70% - ??px);*/
+      /*max-width: calc(70% - ??px);*/
+      margin: 20px;
+      width: 75vw;
+      height: 55vh;
+      overflow-x: hidden;
+      border: 1px solid #ccc;
+      background: #ffffff;
+      word-wrap: break-word;
+      display: inline-flex;
+    }
+
+    .CodeFlask .CodeFlask__textarea {
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .CodeFlask__textarea {
+    }
+    .codeflask__flatten {
+      white-space: normal;
+    }
+
+  </style>
+
+
+ <!--Include container-fluid here-->
+ <div class="container-fluid">
+
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="dashboard.html">Dashboard</a>
+      </li>
+      <li class="breadcrumb-item active">Inline Code Editor</li>
+    </ol>
+
+
+    <div class="row">
+      <div id="main" class="col-12">
+        <div class="col-md-12" id="code"></div>
+        <div class="col-md-8">
+          <button style="margin: 10px" class="btn btn-success" id="save" onclick=""><i class="fa fa-save"></i> Done Editing</button>
+          <button style="margin: 10px" class="btn btn-danger" id="obfuscate"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
+          <button style="margin: 10px" class="btn btn-danger" id="runcode"><i class="fa fa-send"></i> Run</button>
+          <button style="margin: 10px" class="btn btn-primary" id="deploy"><i class="fa fa-send"></i> Deploy</button>
+        </div>
+      </div>
+    </div>
+
+
+ </div>
+
+
+ <!-- Include the script you want to attach-->
+ <script>
+   require('./js/editor')
+ </script>
+
+
