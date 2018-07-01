@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="orb">
+<html >
 
 <head>
   <meta charset="utf-8">
@@ -15,9 +15,18 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
   <link href="../public/css/toaster.css" rel="stylesheet">
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular-route.min.js"></script>
+
+
+
+
+
+
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer bg-dark"   id="page-top" ng-app="orb">
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
   <a class="navbar-brand" href="dashboard.html">The Orb</a>
@@ -186,7 +195,10 @@
 
 
        <!--ng-view here-->
-      <ng-view></ng-view>
+      <ng-view>
+
+
+      </ng-view>
 
 
 
@@ -196,8 +208,7 @@
 <footer class="sticky-footer">
   <div class="container">
     <div class="text-center">
-      <button class="btn btn-sm btn-danger" id="send">send</button>
-      <small>Copyright © Your Website 2018</small>
+      <small>Copyright © The Orb 2018</small>
     </div>
   </div>
 </footer>
@@ -243,16 +254,13 @@
 <!--<script src="js/wallet.js"></script>-->
 <!--<script src="js/editor.js"></script>-->
 
-<script src="../bower_components/angular/angular.js"></script>
-<script src="../bower_components/angular-route/angular-route.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-
-<script>
-  require('./script');
-</script>
+<script>require('./script')</script>
+<script>require('./controllers/main.controller')</script>
+<script>require('./controllers/editor.controller')</script>
 
 <script>if (window.module) module = window.module;</script>
 </div>

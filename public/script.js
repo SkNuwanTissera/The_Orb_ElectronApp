@@ -6,7 +6,9 @@ app.config(function($routeProvider) {
     $routeProvider
 
         .when('/deploy', {
-            templateUrl : 'deployed.html'
+            templateUrl : 'deployed.html',
+            controller : 'EditorController'
+
         })
 
         .when('/editor', {
