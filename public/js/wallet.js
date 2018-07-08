@@ -2,6 +2,8 @@ let storage = require('node-persist');
 var jsonfy = require('jsonfy');
 var Interpreter = require('js-interpreter');
 const swal = require('sweetalert');
+const perf = require('execution-time')();
+
 
 var table = $('#table');
 
@@ -28,15 +30,14 @@ storage.init({
 
 }).then(()=>{
     storage.forEach(async function(datum) {
-        table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check" class="btn btn-success rounded">Check</button></td><td><button id="pay" class="btn btn-success rounded">Pay</button></td></tr>');
+        table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check'+datum.key+'" class="btn btn-success rounded">Check</button></td><td><button id="pay" class="btn btn-success rounded">Pay</button></td></tr>');
     });
 });
 
 
 var check = $('#check');
 check.click(function() {
-
-    console.log(storage.getItem('8088fa3c-1945-013a-c409-6b4b1d989b01').then(function (data) {
+    console.log(storage.getItem('e857bf27-dbc4-eaaf-939b-d148ffea3b2e').then(function (data) {
         console.log(data)
         console.log(myInterpreter);
         console.time(x);
@@ -52,7 +53,15 @@ check.click(function() {
 
 var sd = $('#sd');
 sd.click(function() {
-    console.log("SDSDSWDSD")
+    console.log(storage.getItem('e857bf27-dbc4-eaaf-939b-d148ffea3b2e').then(function (data) {
+        console.log(data.key)
+        //at beginning of your code
+        perf.start();
+        var myInterpreter = new Interpreter(data);
+        //at end of your code
+        const results = perf.stop();
+        console.log("execution time "+ results.time +" ms");  // in milliseconds
+    }));
         swal({
             title: "Confirm Paying ?",
             text: "\"This function costs 0.00001 per request based on complexity.",
