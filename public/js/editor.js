@@ -151,30 +151,30 @@ let x = (
         }});
 var str = x.toString();
 
-
-var test = $('#test');
-test.click(function() {
-    // Axios for get all functions
-    /*
-    axios.get('http://localhost:3001/flist')
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        */
-
-    axios.post(url+'/call', {
-        "params":[1,32323],
-        "name":"addAll"
-    }).then(function (response) {
-        console.log(response);
-    }).catch(function (error) {
-        console.log(error);
-    });
-
-});
+//
+// var test = $('#test');
+// test.click(function() {
+//     // Axios for get all functions
+//     /*
+//     axios.get('http://localhost:3001/flist')
+//         .then(function (response) {
+//             console.log(response);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+//         */
+//
+//     axios.post(url+'/call', {
+//         "params":[1,32323],
+//         "name":"addAll"
+//     }).then(function (response) {
+//         console.log(response);
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+//
+// });
 
 function parseJSON(str) {
     try

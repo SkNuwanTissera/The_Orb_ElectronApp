@@ -13,6 +13,7 @@ const clientid = "OrbAppbdfjgffgdsg#RE%FGD$#dfghgfhDFfxcBBvcGfdGHT%$^#$DSFF"
 Connect to client
  */
 
+/*
 var socket = io('http://localhost:3000');
 
 socket.on('connect',function(){
@@ -76,23 +77,23 @@ socket.on('connect',function(){
 
 });
 
+*/
 
-
-call_function();
-function call_function() {
-        var params = [1,32323];
-        var name = "addAll";
-        socket.emit('fcall', {clientId: clientid ,fname: name, params: params, socketId: socket.id})
-}
-
-function getFunctionList() {
-    socket.emit('flist', {socketId: socket.id}, function (data) {
-        if (data) {
-            return res.status(200).send(data)
-        }
-        return res.status(204).send()
-    })
-}
+// call_function();
+// function call_function() {
+//         var params = [1,32323];
+//         var name = "addAll";
+//         socket.emit('fcall', {clientId: clientid ,fname: name, params: params, socketId: socket.id})
+// }
+//
+// function getFunctionList() {
+//     socket.emit('flist', {socketId: socket.id}, function (data) {
+//         if (data) {
+//             return res.status(200).send(data)
+//         }
+//         return res.status(204).send()
+//     })
+// }
 
 // app.get('/', (req, res) => {
 //     res.status(200).send()
