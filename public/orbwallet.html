@@ -38,7 +38,9 @@
       <div class="card-header">
         <i class="fa fa-table"></i> Orb Wallet</div>
       <div class="card-body">
-        <button id="sd" href="editor.html" class="btn btn-danger rounded">Check Complexity</button> <br/><br/>
+        <input placeholder="Copy & Paste Function ID Here" ng-model="func_id" class="form-control" type="text" /><br/>
+        <button href="editor.html" ng-click="calculateExecutionTime(func_id)" class="btn btn-danger rounded">Check Complexity & Pay</button><br/>
+        <br/>
         <div class="table-responsive">
           <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
             <thead id="table">

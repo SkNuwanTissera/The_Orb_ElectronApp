@@ -125,23 +125,26 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
         return _p8() + _p8(true) + _p8(true) + _p8();
     }
 
-    $scope.test = "fdf";
 
-    getFunctions();
-//deploy code
-    $scope.postFunction = function () {
-        //console.log(flask.getCode());
-        var data = {id : 23, name: 'addAll', fnc: flask.getCode().toString()}
+
+    //deploy code
+    $scope.postFunction = function (postFunc){
+        //do some validation here
+        if(postFunc.id == null || postFunc.name == null || flask.getCode() == null ){
+            swal("Error","Null parameters");
+        }
+        var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
         SocketService.postFunction(data);
+        swal("Sucessfull","Deployed to Orb!")
 
     }
 
     // $scope.funArr=
+    getFunctions();
+    async function getFunctions(){
 
-    function getFunctions(){
-
-            var list = SocketService.getFunctionList()
-            console.log("list"+list);
+            var list = await SocketService.getFunctionList()
+            console.log("list "+list);
     }
 //parse JSON files
     let x = (
@@ -153,32 +156,8 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
                 a = b;
                 b = sum;
             }});
-    var str = x.toString();
 
-//
-// var test = $('#test');
-// test.click(function() {
-//     // Axios for get all functions
-//     /*
-//     axios.get('http://localhost:3001/flist')
-//         .then(function (response) {
-//             console.log(response);
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         });
-//         */
-//
-//     axios.post(url+'/call', {
-//         "params":[1,32323],
-//         "name":"addAll"
-//     }).then(function (response) {
-//         console.log(response);
-//     }).catch(function (error) {
-//         console.log(error);
-//     });
-//
-// });
+    var str = x.toString();
 
     function parseJSON(str) {
         try

@@ -120,7 +120,7 @@
     }
 </style>
 
-<div class="container-fluid">
+<div ng-controller="PaymentController" class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -136,7 +136,7 @@
                         <!--<div class="price-card">-->
                             <div class="price-card-head">
                                 <p class="pg-name"><span>Total Coins</span><br/>On Subcription</p>
-                                <p class="pg-price"> 50 <i class="fa fa-dollar-sign"></i></p>
+                                <p class="pg-price"> {{coins}} <i class="fa fa-dollar-sign"></i></p>
                         </div>
                     </div>
 
