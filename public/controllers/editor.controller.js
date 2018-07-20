@@ -139,13 +139,12 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
     }
 
-    // $scope.funArr=
-    getFunctions();
-    async function getFunctions(){
-
-            var list = await SocketService.getFunctionList()
-            console.log("list "+list);
-    }
+    // getFunctions();
+    // async function getFunctions(){
+    //
+    //         var list = await SocketService.getConnectIO().getFunctionList()
+    //         console.log("list "+list);
+    // }
 //parse JSON files
     let x = (
         function fibonacci(n, output) {
