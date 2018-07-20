@@ -3,7 +3,11 @@ const storage = require('node-persist');
 const swal = require('sweetalert');
 var JavaScriptObfuscator = require('javascript-obfuscator');
 var Interpreter = require('js-interpreter');
+var evaljs = require("evaljs");
+const perf = require('execution-time')();
+const axios = require('axios');
 
+let url = "http://localhost:3000";
 
 storage.init({
     dir: process.cwd() +'/core/storage/_persist',
@@ -33,8 +37,7 @@ storage.init({
 const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
 
 flask.onUpdate((code) => {
-    console.log("Hiiii");
-    console.log("This is "+code);
+    console.log(code);
 });
 
 const code = flask.getCode();
@@ -51,16 +54,16 @@ obfuscate.click(function () {
             controlFlowFlattening: true
         }
     );
+
     toastr.success('Obfuscated!', "");
     console.log("Obfuscated Code : " + obfuscationResult.getObfuscatedCode());
     toastr.success('View the obfuscated code !! ', "")
+
     toastr.options.onclick = function() {
         swal("Obfuscated Code!", obfuscationResult.getObfuscatedCode());
     }
 
 });
-
-
 
 //code for function calling
 
@@ -92,16 +95,24 @@ function getItem() {
 // code for interpreter
 var run = $('#runcode');
 run.click(function() {
-    // getItem().then(function(value) {
-    //     console.log("DFG "+value);
-    // })
+    var func = flask.getCode();
+
+    var res = evaljs.evaluate(func)
     toastr.success('Code is Running !! ', "");
-    var myInterpreter = new Interpreter(getItem().then(function (value) {
-        return value;
-    }));
-    // var myInterpreter = new Interpreter(flask.getCode());
+
+    //at beginning of your code
+    perf.start();
+    var myInterpreter = new Interpreter(func);
+    //at end of your code
+    const results = perf.stop();
+    console.log("execution time "+ results.time +" ms");  // in milliseconds
+
     myInterpreter.run();
-    console.log("LOL :" +myInterpreter.value());
+    console.log("Interpreter :" +myInterpreter.value);
+    console.log("Evaljs :" +res.toString());
+
+    toastr.success('Executed! Answer is :  '+myInterpreter.value.toString() ,  );
+    toastr.success('Execution Time : ' + results.time ,  );
 });
 
 //generate UUID
@@ -115,50 +126,13 @@ function guid() {
 
 
 
-var baseurl = "http://localhost:3001/";
-var userid = "3453ert";
-var functionid ="eferetet";
 
 //deploy code
 let deploy = $('#deploy');
 deploy.click(function() {
     //send POST request
-    console.log("DFDFDF");
 
 
-    const fn = (flask.getCode());
-
-    // obj = {
-    //     id:1243,
-    //     name: "sentiment",
-    //     fnc: JSON.stringify({fn:fn.toString()})
-    // }
-
-    let url = baseurl;
-    console.log('request to '+url);
-
-    $.ajax({
-        type:"POST",
-        cache:false,
-        url: url,
-        data:{
-            "clientId": "adfjgffgdsg#RE%FGD$#dfghgfhDFfxcBBvcGfdGHT%$^#$DSFF",
-            "id": 113,
-            "name": "addAll",
-            "fn": "function add(param) {\n\tlet total = 0\n\tfor(let elem in param) {\n\t\ttotal += param[elem]\n\t}\n\n\treturn total\n\n}"
-        },
-        statusCode: {
-            404: function() {
-                alert( "page not found" );
-            }
-        },
-        success:function (data) {
-            console.log('function post request success')
-            console.log(data)
-        }
-    }).done(function(data) {
-        console.log("POST RETURN DATA"+data);
-    });
 });
 
 
@@ -177,11 +151,30 @@ let x = (
         }});
 var str = x.toString();
 
-
-var test = $('#test');
-test.click(function() {
-    parseJSON(str);
-});
+//
+// var test = $('#test');
+// test.click(function() {
+//     // Axios for get all functions
+//     /*
+//     axios.get('http://localhost:3001/flist')
+//         .then(function (response) {
+//             console.log(response);
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+//         */
+//
+//     axios.post(url+'/call', {
+//         "params":[1,32323],
+//         "name":"addAll"
+//     }).then(function (response) {
+//         console.log(response);
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+//
+// });
 
 function parseJSON(str) {
     try
@@ -192,3 +185,17 @@ function parseJSON(str) {
         console.error(ex);
     }
 }
+
+//listen for socket(/answer)
+
+// var socket = io('http://localhost:3000');
+//
+// socket.on('connect',function(){
+//     console.log("connect to client");
+// });
+//
+// socket.on('orbapp', function (data) {
+//     console.log(data);
+//     //socket.emit('my other event', { my: 'data' });
+// });
+

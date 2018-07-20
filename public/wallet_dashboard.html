@@ -1,6 +1,126 @@
+<style>
+    .card-container >.col-md-4{
+        padding: 10px;
+    }
+    .card-container .card{
+        position: relative;
+        width: 100%;
+        min-height: 400px;
+        margin-top: 10px;
+        box-shadow: 1.213px 21.213px 30px 0px rgba(158, 158, 158, 0.3);
+        transition: all ease 1s;
+    }
+    .card-container .card:hover{
+        box-shadow: 1.213px 21.213px 30px 0px rgba(0, 0, 0, 0.3);
+        transition: all ease 1s;
+        margin-top: 5px;
+    }
+    .card-container .card:hover >.card-head >i{
+        color: purple;
+        transition: all ease 2s;
+    }
+    .card-container .card>.card-head {
+        text-align: center;
+        padding-top: 50px;
+        font-size: 200%;
+        height: 150px;
+    }
+    .card-container .card>.card-head >i{
+        color: rgba(0,0,0,0.4);
+        transition: all ease 2s;
+    }
+    .card-container .card> .card-title{
+        font-family: "Poppins", sans-serif;;
+        text-align: center;
+        padding-top:18px;
+        font-size: 200%;
+        color: rgba(0,0,0,0.6);
+    }
+    .card-container .card> .card-body{
+        padding:5px 20px 10px 20px;
+        text-align: center;
+        color: rgba(0,0,0,0.6);
+        font-size: 120%;
+    }
+    .price-area{
+        min-height: 100vh;
+        padding-top: 150px;
+        padding-bottom: 150px;
+    }
+    .price-area .price-header{
+        text-align: center;
+    }
+    .price-area .price-header>.title{
+        font-size: 300%;
+        font-weight: 600;
+        line-height: normal;
+    }
+    .price-card-container{
+        padding-top: 70px;
+    }
+    .price-area .price-header>.description{
+        line-height: normal;
+    }
+    .price-card{
+        position: relative;
+        width: 100%;
+        min-height: 500px;
+        margin-top: 10px;
+        box-shadow: 1.213px 21.213px 30px 0px rgba(158, 158, 158, 0.3);
+        transition: all ease 1s;
+    }
+    .price-card-head{
+        width: 100%;
+        height: 200px;
+        position: relative;
+        padding-top: 30px;
+        background-color: rebeccapurple;
+        transition: all ease 1s;
+    }
+    .price-card-head >.pg-name{
+        padding-left: 20px;
+        font-size: 100%;
+        color: rgba(255,255,255,0.9);
+    }
+    .price-card-head >.pg-name>span{
+        font-size: 200%;
+        font-weight: 600;
+    }
+    .price-card-head >.pg-price{
+        position: absolute;
+        bottom: 10px;
+        right: 20px;
+        font-size: 200%;
+        font-weight: 700;
+        color: rgba(255,255,255,0.9);
+    }
+    .price-card-body{
+        padding-top: 30px;
+        padding-left: 10px;
+        padding-bottom: 20px;
+    }
+    .price-card-body >ul{
+        padding-left: 20px;
+    }
+    .price-card-body >ul>li{
+        color: rgba(0,0,0,0.6);
+        font-weight: 600;
+        font-size: 120%;
+        margin-top: 10px;
+        text-align: justify;
+    }
+    .price-card:hover{
+        margin-top: 5px;
+        transition: all ease 1s;
+        box-shadow: 1.213px 21.213px 30px 0px rgba(0, 0, 0, 0.3);
+    }
+    .price-card:hover>.price-card-head{
+        background-color: rgba(255, 56, 56,1.0);
+        transition: all ease 1s;
+    }
+</style>
 
-<div class="content-wrapper">
-    <div class="container-fluid">
+<div ng-controller="PaymentController" class="container-fluid">
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -16,7 +136,7 @@
                         <!--<div class="price-card">-->
                             <div class="price-card-head">
                                 <p class="pg-name"><span>Total Coins</span><br/>On Subcription</p>
-                                <p class="pg-price"> 50 <i class="fa fa-dollar-sign"></i></p>
+                                <p class="pg-price"> {{coins}} <i class="fa fa-dollar-sign"></i></p>
                         </div>
                     </div>
 
@@ -37,23 +157,13 @@
                             </div>
                         <!--</div>-->
                     </div>
-                </div>`
+                </div>
 
 
 
             </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
         </div>
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-        <div class="container">
-            <div class="text-center">
-                <small>Copyright © Your Website 2018</small>
-            </div>
-        </div>
-    </footer>
+
 
 
 
