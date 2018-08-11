@@ -1,4 +1,4 @@
-angular.module('orb').controller('EditorController',function ($scope,SocketService) {
+angular.module('orb').controller('EditorController',function ($scope,SocketService, TempService) {
    //import Js file
    //  require('../js/editor')
     var CodeFlask = require('codeflask');
@@ -129,6 +129,8 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
     //deploy code
     $scope.postFunction = function (postFunc){
+        var fid = guid();
+        postFunc.id = fid;
         //do some validation here
         if(postFunc.id == null || postFunc.name == null || flask.getCode() == null ){
             swal("Error","Null parameters");
@@ -136,6 +138,7 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
         var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
         SocketService.postFunction(data);
         swal("Sucessfull","Deployed to Orb!")
+       // TempService.setFunctions(postFunc);
 
     }
 

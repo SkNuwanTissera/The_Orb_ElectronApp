@@ -6,7 +6,8 @@ app.service('SocketService', function() {
     let url = ''
     let fnObj = []
     let sendFn = [] // peers and functions
-    var IO = io('http://localhost:3000', { reconnect: true})
+    // var IO = io('http://localhost:3000', { reconnect: true})
+    var IO = io('http://128.199.171.85/', { reconnect: true})
     const _ = require('lodash')
     let funArr = []
     let superNodeArr = []
@@ -88,7 +89,7 @@ app.service('SocketService', function() {
                 // var arr = {clientId: clientid ,fname: name, params: params, socketId: IO.id}
                 var params = data.params;
                 var name = data.name;
-                var arr = {clientId: clientid ,fname: name, params: params, socketId: IO.id}
+                var arr = {clientId: clientid ,fname: name, params: params, socketId: IO.id};
                 console.log(arr);
                 IO.emit('fcall', arr);
                 console.log("function Called- from orb app");
@@ -134,6 +135,15 @@ app.service('SocketService', function() {
     }
 
     function getfList() {
-        return list;
+        console.log("execitedD")
+         IO.emit('flist', { socketId: IO.id}, function (data) {
+            if(data) {
+                console.log(data);
+                return data
+            }
+            else{
+                console.log("ERROR IN FUNCTION LOADING")
+            }
+        })
     }
 });
