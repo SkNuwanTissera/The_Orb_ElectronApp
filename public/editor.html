@@ -44,15 +44,15 @@
       <div id="main" class="col-12">
           <div style="padding: 20px" class="row">
               <input style="margin: 10px" class="form-control col" ng-model="postFunc.name" type="text" placeholder="Function Name"/>
-              <input style="margin: 10px" class="form-control col" ng-model="postFunc.id" type="text" placeholder="Function ID"/>
+              <input style="margin: 10px" class="form-control col" ng-model="postFunc.id" type="text" placeholder="Function ID (Auto-generated)"/>
           </div>
         <div class="col-md-12" id="code"></div>
         <div class="col-md-8">
           <button style="margin: 10px" class="btn btn-success" id="save" onclick=""><i class="fa fa-save"></i>{{test}} Done Editing</button>
           <button style="margin: 10px" class="btn btn-danger" id="obfuscate"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
-          <button style="margin: 10px" class="btn btn-danger" id="runcode"><i class="fa fa-send"></i> Run</button>
+          <!--<button style="margin: 10px" class="btn btn-danger" id="runcode"><i class="fa fa-send"></i> Run</button>-->
           <button style="margin: 10px" class="btn btn-primary" id="deploy" ng-click="postFunction(postFunc)"><i class="fa fa-send"></i> Deploy</button>
-          <button style="margin: 10px" class="btn btn-primary" ng-click="callFunction()" id="call"><i class="fa fa-send"></i> Call</button>
+          <!--<button style="margin: 10px" class="btn btn-primary" ng-click="callFunction()" id="call"><i class="fa fa-send"></i> Call</button>-->
         </div>
       </div>
     </div>

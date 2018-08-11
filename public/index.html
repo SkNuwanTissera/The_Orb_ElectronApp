@@ -195,8 +195,6 @@
   </div>
 </nav>
 <div class="content-wrapper" ng-controller="orbController">
-
-
        <!--ng-view here-->
       <ng-view></ng-view>
 
@@ -205,13 +203,13 @@
 </div>
 <!-- /.container-fluid-->
 <!-- /.content-wrapper-->
-<footer class="sticky-footer">
-  <div class="container">
-    <div class="text-center">
-      <small>Copyright © The Orb 2018</small>
-    </div>
-  </div>
-</footer>
+<!--<footer class="sticky-footer">-->
+  <!--<div class="container">-->
+    <!--<div class="text-center">-->
+      <!--<small>Copyright © The Orb 2018</small>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</footer>-->
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">
   <i class="fa fa-angle-up"></i>
@@ -257,14 +255,24 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor/dist/jsoneditor.min.js"></script>
 <script>require('./script')</script>
 <script>require('./controllers/orb.controller')</script>
 <script>require('./controllers/editor.controller')</script>
 <script>require('./services/orb')</script>
 <script>require('./services/payment.service')</script>
+<script>require('./services/temp.service')</script>
 <script>require('./controllers/payments.controller')</script>
-
+<script>
+    $(function() {
+        return $(".carousel.lazy").on("slide", function(ev) {
+            var lazy;
+            lazy = $(ev.relatedTarget).find("img[data-src]");
+            lazy.attr("src", lazy.data('src'));
+            lazy.removeAttr("data-src");
+        });
+    });
+</script>
 <script>if (window.module) module = window.module;</script>
 </body>
 </html>
