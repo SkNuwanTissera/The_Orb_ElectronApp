@@ -30,7 +30,7 @@ storage.init({
 
 }).then(()=>{
     storage.forEach(async function(datum) {
-        table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check'+datum.key+'" class="btn btn-success rounded">Check</button></td><td><button id="pay" class="btn btn-success rounded">Pay</button></td></tr>');
+        table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check'+datum.key+'" class="btn btn-success rounded">Check</button></td><td><button id="pay" class="btn btn-danger rounded">Deploy</button></td></tr>');
     });
 });
 
