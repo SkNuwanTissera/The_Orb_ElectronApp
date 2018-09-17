@@ -2,10 +2,12 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
     let storage = require('node-persist');
     var jsonfy = require('jsonfy');
     var Interpreter = require('js-interpreter');
+    var CodeFlask = require('codeflask');
     const swal = require('sweetalert');
     const perf = require('execution-time')();
 
     $scope.coins = PaymentService.getcoins();
+    const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
 
     var table = $('#table');
 
@@ -35,7 +37,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
         // $scope.rowData=null;
         storage.forEach(async function(datum) {
             // $scope.rowData.push(datum);
-            table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td><td><button id="check'+datum.key+'" class="btn btn-success rounded">Check</button></td><td><button id="pay"  class="btn btn-success rounded">Pay</button></td></tr>');
+            table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td></tr>');
         });
     });
 
@@ -67,7 +69,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
 
         var threshold = 100;
         console.log(storage.getItem(datum).then(function (data) {
-            console.log(data)
+            console.log(data);
             //at beginning of your code
             perf.start();
             for(var i =1; i<threshold; i++){
@@ -92,9 +94,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
             }).then((willDelete) => {
                 if (willDelete) {
                     PayForFunction(calculatePrice(etime));
-                    swal("You paid for the function !", {
-                        icon: "success",
-                    });
+
 
                 }
             });
@@ -156,13 +156,49 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
 
 
     function PayForFunction(X) {
+
+
         var qw = PaymentService.getcoins()- X;
-        PaymentService.setcoins(qw);
-        $scope.coins=(Math.round(PaymentService.getcoins()*100)/100);
+        if(PaymentService.getcoins()>0){
+            PaymentService.setcoins(qw);
+            $scope.coins=(Math.round(PaymentService.getcoins()*100)/100);
+            swal("You paid for the function !", {
+                icon: "success",
+            });
+        }
+        else{
+            swal("You need to recharge your wallet")
+        }
+
     }
+    
+    $scope.PayForDeploy=function () {
+        console.log("dfsfdfdfd");
+        var threshold = 100;
+            perf.start();
+            for(var i =1; i<threshold; i++){
+                var myInterpreter = new Interpreter(flask.getCode());
+            }
+            //at end of your code
+            const results = perf.stop();
+            var etime = results.time/threshold
+            PaymentService.setetime(etime);
 
+            //calculate price
+            console.log(calculatePrice(etime)+ " Coins");
 
-
-
-
+            //showMessage(results.time);
+            console.log("execution time "+ etime +" ms");  // in milliseconds
+            swal({
+                title: "Confirm Paying ?",
+                text: "\"This function costs "+calculatePrice(etime)+" coins per request based on complexity.",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    PayForFunction(calculatePrice(etime));
+                }
+            });
+    }
 });

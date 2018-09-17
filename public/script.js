@@ -10,7 +10,6 @@ app.config(function($routeProvider) {
             controller : 'EditorController'
         })
 
-
         .when('/editor', {
             templateUrl : 'editor.html'
         })
@@ -25,6 +24,18 @@ app.config(function($routeProvider) {
 
         .when('/wallet', {
             templateUrl : 'orbwallet.html'
+        })
+
+        .when('/', {
+            templateUrl : 'editor.html'
+        })
+
+        .when('/register', {
+            templateUrl : 'register.html'
+        })
+
+        .when('/login', {
+            templateUrl : 'login.html'
         })
 
 });
