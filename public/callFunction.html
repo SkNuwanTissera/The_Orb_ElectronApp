@@ -10,34 +10,25 @@
     <div class="col-md-12" id="code"></div>
     <div class="card mb-3">
         <div class="card-body">
-            <div>
+            <div ng-controller="PaymentController">
                 <form novalidate>
+
                     Function Name :<br>
                     <select class="form-control" ng-click="populate()" ng-model="func.name">
                         <option ng-repeat="x in funcs" value="{{x}}">{{x}}</option>
                     </select><br>
 
-                    <!--<li ng-repeat="country in funcs">-->
-                        <!--{{country.name}} has population-->
-                    <!--</li>-->
-                    <!--<select class="form-control" ng-model="func.name">-->
-                        <!--<option value="addAll">addAll</option>-->
-                        <!--<option value="sentiment">Sentiment - Machine Learning Function</option>-->
-                        <!--<option value="fibonacci">Fibonacci - Calculate numbers in a fibonacci series</option>-->
-                    <!--</select>-->
                     Parameters :<br>
                     <input class="form-control" type="text" ng-model="func.params">
                     <a href="">Accept JSON as a Parameter</a><br>
-
-                    <!--<div id='editor_holder'></div>-->
-                    <!--<button id='submit'></button><br><br>-->
-
-
                     <br>
+
                     <h5>Params : {{func.params}}</h5><br>
                     <button class="btn btn-success" ng-click="callFunction(func)">Call</button>
                 </form><br/>
+
                 <h2>Answer : {{ans}}</h2>
+
             </div>
         </div>
     </div>

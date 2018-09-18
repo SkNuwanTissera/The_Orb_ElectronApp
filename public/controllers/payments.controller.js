@@ -7,7 +7,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
     const perf = require('execution-time')();
 
     $scope.coins = PaymentService.getcoins();
-    const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
+    // const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
 
     var table = $('#table');
 
@@ -101,6 +101,11 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
         }));
     }
 
+    /**
+     * This contains the logic in consuming functions
+     * @param time
+     * @returns {number}
+     */
     function calculatePrice(time){
         var total = 0;
         if(time < 2){
@@ -171,34 +176,5 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
         }
 
     }
-    
-    $scope.PayForDeploy=function () {
-        console.log("dfsfdfdfd");
-        var threshold = 100;
-            perf.start();
-            for(var i =1; i<threshold; i++){
-                var myInterpreter = new Interpreter(flask.getCode());
-            }
-            //at end of your code
-            const results = perf.stop();
-            var etime = results.time/threshold
-            PaymentService.setetime(etime);
 
-            //calculate price
-            console.log(calculatePrice(etime)+ " Coins");
-
-            //showMessage(results.time);
-            console.log("execution time "+ etime +" ms");  // in milliseconds
-            swal({
-                title: "Confirm Paying ?",
-                text: "\"This function costs "+calculatePrice(etime)+" coins per request based on complexity.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
-                    PayForFunction(calculatePrice(etime));
-                }
-            });
-    }
 });

@@ -22,8 +22,8 @@ app.config(function($routeProvider) {
             templateUrl : 'wallet_dashboard.html'
         })
 
-        .when('/wallet', {
-            templateUrl : 'orbwallet.html'
+        .when('/fstore', {
+            templateUrl : 'fstore.html'
         })
 
         .when('/', {

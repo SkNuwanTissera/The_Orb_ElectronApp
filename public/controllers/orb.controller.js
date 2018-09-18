@@ -1,10 +1,21 @@
-angular.module('orb').controller('orbController', async function ($scope, SocketService, TempService) {
+angular.module('orb').controller('orbController', async function ($scope, SocketService) {
 
     let list = null;
     $scope.answer="";
-    $scope.func = {}
-    let ans = null
+    $scope.func = {};
+    let ans = null;
+
+    /**
+     * Importing Context from Socket Connection
+     *
+     */
     soc = SocketService.getConnectIO();
+
+    /**
+     * Seeking for Answer from Socket
+     * Async func
+     */
+
     soc.on('answer', async function(data){
         console.log(data)
         this.ans=data;
@@ -19,6 +30,10 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
         $scope.answer=this.ans;
     });
 
+    /**
+     * Emitting the function list
+     *
+     */
     $scope.populate= function () {
         soc.emit('flist', { socketId: soc.id}, function (data) {
             if(data) {
@@ -59,15 +74,12 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
 
     console.log('Functions'+ await SocketService.getFlist());
 
-    // $scope.funcs = await TempService.getFunctions();
-    // console.log('Functions'+ await TempService.getFunctions());
 
-    // $scope.funcs = [
-    //     {name : "addAll", ds : "sample function"},
-    //     {name : "sentiment", ds : "sample function"},
-    // ];
-
-//function calling by id
+    /**
+     * function calling with parameters
+     * @param data
+     * @returns {Promise<void>}
+     */
     $scope.callFunction = async function (data) {
 
         try {
@@ -88,6 +100,7 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
                     //calling the socket service
                     // await SocketService.setAnswer(null);
                     await  SocketService.callFunction(data);
+
 
                     //$scope.answer = SocketService.getAnswer();
                 } else {
@@ -119,52 +132,4 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
     }
 
 
-});
-
-
-// Initialize the editor with a JSON schema
-var editor = new JSONEditor(document.getElementById('editor_holder'),{
-    schema: {
-        type: "object",
-        title: "Car",
-        properties: {
-            make: {
-                type: "string",
-                enum: [
-                    "Toyota",
-                    "BMW",
-                    "Honda",
-                    "Ford",
-                    "Chevy",
-                    "VW"
-                ]
-            },
-            model: {
-                type: "string"
-            },
-            year: {
-                type: "integer",
-                enum: [
-                    1995,1996,1997,1998,1999,
-                    2000,2001,2002,2003,2004,
-                    2005,2006,2007,2008,2009,
-                    2010,2011,2012,2013,2014
-                ],
-                default: 2008
-            },
-            safety: {
-                type: "integer",
-                format: "rating",
-                maximum: "5",
-                exclusiveMaximum: false,
-                readonly: false
-            }
-        }
-    }
-});
-
-// Hook up the submit button to log to the console
-document.getElementById('submit').addEventListener('click',function() {
-    // Get the value from the editor
-    console.log(editor.getValue());
 });

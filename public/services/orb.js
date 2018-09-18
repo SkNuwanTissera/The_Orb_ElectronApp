@@ -5,15 +5,14 @@ app.service('SocketService', function() {
     let clientid = "Orbapp4343rsr324ssdwewe23424234234324dfdf";
     let url = ''
     let fnObj = []
-    let sendFn = [] // peers and functions
+    let sendFn = []
+    // peers and functions
     // var IO = io('http://localhost:3000', { reconnect: true})
-    var IO = io('http://128.199.171.85/', { reconnect: true})
+    // var IO = io('http://192.168.1.2:8000', { reconnect: true})
+    var IO = io('http://172.27.97.81:3000', { reconnect: true})
     const _ = require('lodash')
     let funArr = []
     let superNodeArr = []
-
-
-
     IO.once('connect', function(){
 
         console.log('Connected' );
@@ -68,7 +67,7 @@ app.service('SocketService', function() {
 
         IO.on('heartbeat', function (data) {
             console.log(data)
-        })
+    })
     });
 
     return{
