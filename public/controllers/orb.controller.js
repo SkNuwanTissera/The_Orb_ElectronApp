@@ -79,31 +79,50 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
      * function calling with parameters
      * @param data
      * @returns {Promise<void>}
+     *
+     * TO-DO :
+     * 1. Accept JSON as a parameter
+     * 2. Accept string parameters
+     *
      */
     $scope.callFunction = async function (data) {
 
         try {
             if(data.name != null && data.params != null ){
+
                 console.log(data.params)
                 console.log(data.name)
+
+                /**
+                 *  Condition 1 : if parameters are NOT as a array
+                 *
+                 */
                 if(!Array.isArray(data.params)){
+
                     const formattedData = listToAray(data.params, ",")
+
                     if(formattedData === null) {
                         swal("Error in Calling Function - NULL parameters");
                         return
                     }
+
                     const paramsArr = formattedData.map(function (item) {
                         return parseInt(item, 10)
                     })
 
                     data.params=paramsArr;
+
                     //calling the socket service
-                    // await SocketService.setAnswer(null);
+                    //await SocketService.setAnswer(null);
                     await  SocketService.callFunction(data);
 
-
-                    //$scope.answer = SocketService.getAnswer();
                 } else {
+                    /**
+                     *  Condition 2 : if parameters are in form of an Array
+                     *
+                     */
+
+                    console.log("DATA : ",data);
                     SocketService.callFunction(data);
                 }
             }
@@ -130,6 +149,7 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
 
         return fullArray;
     }
+
 
 
 });

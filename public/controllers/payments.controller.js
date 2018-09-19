@@ -4,6 +4,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
     var Interpreter = require('js-interpreter');
     var CodeFlask = require('codeflask');
     const swal = require('sweetalert');
+    const swal2 = require('sweetalert2')
     const perf = require('execution-time')();
 
     $scope.coins = PaymentService.getcoins();
@@ -176,5 +177,37 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
         }
 
     }
+
+
+    /**
+     * Alert for Function Idle message
+     * @type {*|jQuery|HTMLElement}
+     */
+
+    var checkCondition = $('#checkCondition');
+    checkCondition.click(function() {
+        swal( "Function is Idle !! ",{icon:"success"} );
+    });
+
+
+    /**
+     * JSON box for parameter input
+     * @type Angular $scope
+     */
+
+     $scope.JSONpopupInput = async function () {
+
+         const {value: text} = await swal2({
+             input: 'textarea',
+             inputPlaceholder: 'Type your message here...',
+             showCancelButton: true
+         })
+
+         if (text) {
+             swal(text)
+         }
+
+     }
+
 
 });
