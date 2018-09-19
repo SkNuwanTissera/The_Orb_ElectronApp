@@ -1,8 +1,8 @@
 # The_Orb_ElectronApp
 Cross platform enabled Client Software using electron for The_Orb ( Decentralized FaaS provider)
 
-##Install
+## Install
 `npm install`
 
-##Run
+## Run
 `npm start`
