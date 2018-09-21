@@ -2,7 +2,10 @@ var app = angular.module('orb');
 
 app.service('TempService', function() {
     var flist;
+    var fparams;
     return {
+        setParameterObject : setParameterObject,
+        getParameterObject : getParameterObject,
         setFunctions:setFuncs,
         getFunctions:getFuncs
     };
@@ -14,4 +17,13 @@ app.service('TempService', function() {
     function getFuncs() {
         return flist;
     }
+
+    function setParameterObject(data) {
+       fparams=data;
+    }
+
+    function getParameterObject() {
+        return fparams;
+    }
+
 })

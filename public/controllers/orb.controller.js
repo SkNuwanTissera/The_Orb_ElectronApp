@@ -1,4 +1,4 @@
-angular.module('orb').controller('orbController', async function ($scope, SocketService) {
+angular.module('orb').controller('orbController', async function ($scope, SocketService,TempService) {
 
     let list = null;
     $scope.answer="";
@@ -88,43 +88,53 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
     $scope.callFunction = async function (data) {
 
         try {
-            if(data.name != null && data.params != null ){
 
-                console.log(data.params)
-                console.log(data.name)
 
-                /**
-                 *  Condition 1 : if parameters are NOT as a array
-                 *
-                 */
-                if(!Array.isArray(data.params)){
 
-                    const formattedData = listToAray(data.params, ",")
-
-                    if(formattedData === null) {
-                        swal("Error in Calling Function - NULL parameters");
-                        return
-                    }
-
-                    const paramsArr = formattedData.map(function (item) {
-                        return parseInt(item, 10)
-                    })
-
-                    data.params=paramsArr;
-
-                    //calling the socket service
-                    //await SocketService.setAnswer(null);
-                    await  SocketService.callFunction(data);
-
-                } else {
-                    /**
-                     *  Condition 2 : if parameters are in form of an Array
-                     *
-                     */
-
-                    console.log("DATA : ",data);
-                    SocketService.callFunction(data);
-                }
+            if(data.name != null ){
+                data.params = TempService.getParameterObject();
+                console.log("################################");
+                console.log(data.params);
+                console.log(data.name);
+                console.log(data);
+                console.log("################################");
+                SocketService.callFunction(data);
+            //
+            //     console.log(data.params)
+            //     console.log(data.name)
+            //
+            //     /**
+            //      *  Condition 1 : if parameters are NOT as a array
+            //      *
+            //      */
+            //     if(!Array.isArray(data.params)){
+            //
+            //         const formattedData = listToAray(data.params, ",")
+            //
+            //         if(formattedData === null) {
+            //             swal("Error in Calling Function - NULL parameters");
+            //             return
+            //         }
+            //
+            //         const paramsArr = formattedData.map(function (item) {
+            //             return parseInt(item, 10)
+            //         })
+            //
+            //         data.params=paramsArr;
+            //
+            //         //calling the socket service
+            //         //await SocketService.setAnswer(null);
+            //         console.log("PU : ",data);
+            //         await  SocketService.callFunction(data);
+            //
+            //     }else {
+            //         /**
+            //          *  Condition 2 : if parameters are in form of an Array
+            //          *
+            //          */
+            //         console.log("DATA : ",data);
+            //         SocketService.callFunction(data);
+            //     }
             }
             else{
                 swal("Error in Calling Function - NULL parameters");

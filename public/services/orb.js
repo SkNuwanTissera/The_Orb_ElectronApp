@@ -9,7 +9,7 @@ app.service('SocketService', function() {
     // peers and functions
     // var IO = io('http://localhost:3000', { reconnect: true})
     // var IO = io('http://192.168.1.2:8000', { reconnect: true})
-    var IO = io('http://172.27.97.81:3000', { reconnect: true})
+    var IO = io('http://10.64.128.39:3000', { reconnect: true})
     const _ = require('lodash')
     let funArr = []
     let superNodeArr = []
@@ -44,13 +44,18 @@ app.service('SocketService', function() {
             console.log('============ Answering machine ============')
             const params = data.params
             const fnObj = data.fnobj
-            // console.log("Function array "+funArr);
+            console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            console.log("Function array ",funArr);
+            console.log("Function params ",params);
+            console.log("Function Obj ",fnObj);
+            console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
             for(let fn of funArr) {
                 if(fn.name == fnObj.name) {
                     let actualfn = fn.fn
                     let res = eval("("+actualfn+")")
                     let ans = res(params)
                     callback(ans)
+                    console.log('==ANSWER===',ans);
                 }
             }
             console.log('============ Answering machine ended============')
@@ -89,12 +94,16 @@ app.service('SocketService', function() {
                 var params = data.params;
                 var name = data.name;
                 var arr = {clientId: clientid ,fname: name, params: params, socketId: IO.id};
+
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$");
                 console.log(arr);
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$");
+
                 IO.emit('fcall', arr);
                 console.log("function Called- from orb app");
             }
             catch (e) {
-                console.log("Error Occured : "+e.message)
+                console.log("Error Occured : "+e.message);
             }
         },
         postFunction : function (data) {
@@ -115,7 +124,7 @@ app.service('SocketService', function() {
                 console.log('posted.....'+fnObj.fn+fnObj.name+fnObj.id)
             } catch (e) {
                 console.log('failed in posting a function'+e.message)
-            }
+        }
         },
         getAnswer : getAns,
         setAnswer : setAns,
