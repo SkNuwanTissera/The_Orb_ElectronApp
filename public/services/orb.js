@@ -1,74 +1,97 @@
 var app = angular.module('orb');
+var electron_remote = require('electron').remote;
 
 app.service('SocketService', function() {
+
+   var REQ_SERVICE = require('./request.service');
+
+
+
+
+    setTimeout(function () {
+        console.log(REQ_SERVICE.SocUri());
+    },2000);
 
     let clientid = "Orbapp4343rsr324ssdwewe23424234234324dfdf";
     let url = ''
     let fnObj = []
     let sendFn = []
-    // peers and functions
-    // var IO = io('http://localhost:3000', { reconnect: true})
-    // var IO = io('http://192.168.1.2:8000', { reconnect: true})
-    var IO = io('http://172.27.97.81:3000', { reconnect: true})
     const _ = require('lodash')
     let funArr = []
     let superNodeArr = []
-    IO.once('connect', function(){
+    var IO;
 
-        console.log('Connected' );
+    // peers and functions
+    // var IO = io('http://localhost:3000', { reconnect: true})
+    // var IO = io('http://192.168.1.2:8000', { reconnect: true})
 
-        IO.on('register', function (data) {
-            IO.emit('reg-req', { clientid: clientid })
-            console.log('Registered' );
-        });
+    // console.log("remote : "+electron_remote.getGlobal('sharedObj').url);
+    socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
 
-        IO.on('event', function(data){
-            console.log(data)
-        });
 
-        IO.on('new-fun', function (data) {
-            let sentObj = {
-                destinationSocketId: data.destinationSocketId,
-                destinationClientId: data.destinationClientId,
-                id: data.id,
-                name: data.name,
-                fn: data.fn
-            }
+    function socketClientWrapper(ip) {
 
-            let fnsList = _.unionBy([sentObj], funArr, 'id')
-            funArr = fnsList
-            console.log('Function added to function list' );
-        })
 
-        IO.on('answer-seek', function (data, callback) {
-            console.log('============ Answering machine ============')
-            const params = data.params
-            const fnObj = data.fnobj
-            // console.log("Function array "+funArr);
-            for(let fn of funArr) {
-                if(fn.name == fnObj.name) {
-                    let actualfn = fn.fn
-                    let res = eval("("+actualfn+")")
-                    let ans = res(params)
-                    callback(ans)
+
+        IO = io(ip, { reconnect: true})
+
+        IO.once('connect', function(){
+
+            console.log('Connected' );
+
+            IO.on('register', function (data) {
+                IO.emit('reg-req', { clientid: clientid })
+                console.log('Registered' );
+            });
+
+            IO.on('event', function(data){
+                console.log(data)
+            });
+
+            IO.on('new-fun', function (data) {
+                let sentObj = {
+                    destinationSocketId: data.destinationSocketId,
+                    destinationClientId: data.destinationClientId,
+                    id: data.id,
+                    name: data.name,
+                    fn: data.fn
                 }
-            }
-            console.log('============ Answering machine ended============')
 
-        })
+                let fnsList = _.unionBy([sentObj], funArr, 'id')
+                funArr = fnsList
+                console.log('Function added to function list' );
+            })
 
-        IO.on('fnlist', function (data) {
-            console.log(data)
-        })
+            IO.on('answer-seek', function (data, callback) {
+                console.log('============ Answering machine ============')
+                const params = data.params
+                const fnObj = data.fnobj
+                // console.log("Function array "+funArr);
+                for(let fn of funArr) {
+                    if(fn.name == fnObj.name) {
+                        let actualfn = fn.fn
+                        let res = eval("("+actualfn+")")
+                        let ans = res(params)
+                        callback(ans)
+                    }
+                }
+                console.log('============ Answering machine ended============')
 
-        IO.on('disconnect', function(){
-            console.log('Disconneted')
+            })
+
+            IO.on('fnlist', function (data) {
+                console.log(data)
+            })
+
+            IO.on('disconnect', function(){
+                console.log('Disconneted')
+            });
+
+            IO.on('heartbeat', function (data) {
+                console.log(data)
+            })
         });
-
-        IO.on('heartbeat', function (data) {
-            console.log(data)
-    })
-    });
+    }
 
     return{
         getConnectIO : function () {
