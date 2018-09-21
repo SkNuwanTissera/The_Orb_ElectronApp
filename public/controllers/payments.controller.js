@@ -1,4 +1,4 @@
-angular.module('orb').controller('PaymentController',function ($scope,SocketService,PaymentService) {
+angular.module('orb').controller('PaymentController',function ($scope,SocketService,PaymentService,TempService) {
     let storage = require('node-persist');
     var jsonfy = require('jsonfy');
     var Interpreter = require('js-interpreter');
@@ -195,6 +195,8 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
      * @type Angular $scope
      */
 
+     var parameterObject = null;
+     $scope.myVar=true;
      $scope.JSONpopupInput = async function () {
 
          const {value: text} = await swal2({
@@ -204,7 +206,27 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
          })
 
          if (text) {
-             swal(text)
+             swal2({
+                 title: 'Confirm ?',
+                 text: text,
+                 type: 'warning',
+                 showCancelButton: true,
+                 confirmButtonColor: '#3085d6',
+                 cancelButtonColor: '#d33',
+                 confirmButtonText: 'Yes'
+             }).then((result) => {
+                 if (result.value) {
+                     swal(
+                         'Parameters Accepted!',
+                         'Your Object has been accepted.',
+                         'success'
+                     )
+                     parameterObject = eval('({' + text + '})');
+                     console.log("PRAMS : ",parameterObject);
+                     TempService.setParameterObject(parameterObject);
+                     $scope.myVar=false;
+                 }
+             })
          }
 
      }

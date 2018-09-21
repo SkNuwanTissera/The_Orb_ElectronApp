@@ -5,9 +5,6 @@ app.service('SocketService', function() {
 
    var REQ_SERVICE = require('./request.service');
 
-
-
-
     setTimeout(function () {
         console.log(REQ_SERVICE.SocUri());
     },2000);
@@ -30,8 +27,6 @@ app.service('SocketService', function() {
 
 
     function socketClientWrapper(ip) {
-
-
 
         IO = io(ip, { reconnect: true})
 
@@ -112,12 +107,16 @@ app.service('SocketService', function() {
                 var params = data.params;
                 var name = data.name;
                 var arr = {clientId: clientid ,fname: name, params: params, socketId: IO.id};
+
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$");
                 console.log(arr);
+                console.log("$$$$$$$$$$$$$$$$$$$$$$$");
+
                 IO.emit('fcall', arr);
                 console.log("function Called- from orb app");
             }
             catch (e) {
-                console.log("Error Occured : "+e.message)
+                console.log("Error Occured : "+e.message);
             }
         },
         postFunction : function (data) {
@@ -138,7 +137,7 @@ app.service('SocketService', function() {
                 console.log('posted.....'+fnObj.fn+fnObj.name+fnObj.id)
             } catch (e) {
                 console.log('failed in posting a function'+e.message)
-            }
+        }
         },
         getAnswer : getAns,
         setAnswer : setAns,

@@ -19,12 +19,13 @@
                     </select><br>
 
                     Parameters :<br>
-                    <input class="form-control" type="text" ng-model="func.params">
-                    <a href="" ng-click="JSONpopupInput()">Accept JSON as a Parameter</a><br>
+                    <input class="form-control" type="text" ng-model="func.params"> <br/>
+
+                    <a href="" ng-click="JSONpopupInput()">Accept JSON as a Parameter </a><button  type="button" ng-hide="myVar" class="btn btn-success btn-xs"><span class="badge">Accepted</span></button>  <br>
                     <br>
 
                     <h5>Params : {{func.params}}</h5><br>
-                    <button class="btn btn-danger" id="checkCondition" ng-click="callFunction(func)">Check</button>
+                    <button class="btn btn-danger"  id="checkCondition" ng-click="callFunction(func)">Check</button>
                     <button class="btn btn-success" ng-click="callFunction(func)">Call</button>
                 </form><br/>
 
