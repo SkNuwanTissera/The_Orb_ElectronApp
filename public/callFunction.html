@@ -13,20 +13,62 @@
             <div ng-controller="PaymentController">
                 <form novalidate>
 
-                    Function Name :<br>
-                    <select class="form-control" ng-click="populate()" ng-model="func.name">
-                        <option ng-repeat="x in funcs" value="{{x}}">{{x}}</option>
-                    </select><br>
+                    <table class="table table-responsive">
+                        <tbody>
+                        <tr>
+                            <td>
+                            <h6>Function Execution</h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><h6>Function Name</h6></td>
+                            <td>
+                                <select class="form-control" ng-click="populate()" ng-model="func.name">
+                                <option ng-repeat="x in funcs" value="{{x}}">{{x}}</option>
+                                </select>
+                            </td>
+                            <td>
 
-                    Parameters :<br>
-                    <input class="form-control" type="text" ng-model="func.params"> <br/>
+                            </td>
+                            <td>
+                                Parameters
+                            </td>
+                            <td>
+                                <button class="btn btn-outline-dark"  ng-click="JSONpopupInput()">Insert</button><br>
+                            </td>
+                            <td>
+                                <button  type="button" ng-hide="myVar" class="btn btn-success btn-xs"><span class="badge">Accepted</span></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-                    <a href="" ng-click="JSONpopupInput()">Accept JSON as a Parameter </a><button  type="button" ng-hide="myVar" class="btn btn-success btn-xs"><span class="badge">Accepted</span></button>  <br>
-                    <br>
+                    <!--Parameters :<br>-->
+                    <!--<input class="form-control" type="text" ng-model="func.params"> <br/>-->
 
-                    <h5>Params : {{func.params}}</h5><br>
-                    <button class="btn btn-danger"  id="checkCondition" ng-click="callFunction(func)">Check</button>
-                    <button class="btn btn-success" ng-click="callFunction(func)">Call</button>
+
+                    <table class="table table-responsive">
+                        <tbody>
+                            <tr>
+                                <td><h6>Operation Details</h6></td>
+                            </tr>
+                            <tr>
+                                <td>Cost per this request</td>
+                                <td>$ 0.00003</td>
+                            </tr>
+                            <tr>
+                                <td>Function Availability</td>
+                                <td><span class="badge">34%</span></td>
+                            </tr>
+                            <tr>
+                                <td>Function Health</td>
+                                <td><span class="badge">Medium</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <button class="btn btn-outline-dark"  id="checkCondition" ng-click="callFunction(func)">Status</button>
+                    <button class="btn btn-outline-dark" ng-click="callFunction(func)">Call Function | {{func.name}}</button>
                 </form><br/>
 
                 <h2>Answer : {{ans}}</h2>

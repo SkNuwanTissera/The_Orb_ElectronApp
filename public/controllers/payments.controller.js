@@ -206,6 +206,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
          })
 
          if (text) {
+
              swal2({
                  title: 'Confirm ?',
                  text: text,
@@ -216,6 +217,7 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
                  confirmButtonText: 'Yes'
              }).then((result) => {
                  if (result.value) {
+
                      swal(
                          'Parameters Accepted!',
                          'Your Object has been accepted.',
@@ -224,10 +226,11 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
                      parameterObject = eval('({' + text + '})');
                      console.log("PRAMS : ",parameterObject);
                      TempService.setParameterObject(parameterObject);
-                     $scope.myVar=false;
+
                  }
              })
          }
+         $scope.myVar=false;
 
      }
 
