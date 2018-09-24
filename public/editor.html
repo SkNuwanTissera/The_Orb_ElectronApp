@@ -77,15 +77,23 @@
                             </table>
                             <div class="col-md-12" id="code"></div>
                             <div class="col-md-8">
-                                
-
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <h6>Recent Function Deployments</h6>
+                                        </tr>
+                                        <tr ng-repeat="func in allFuncs">
+                                            <td>{{x.key}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                     </div>
                     </div>
                     <div class="col-md-4">
                         <table class="table table-striped">
                             <thead>
-                                <tr>Details</tr>
+                                <tr><h6>Details</h6></tr>
                             </thead>
                             <tbody>
                                 <tr ng-hide="postFunc.id == null">

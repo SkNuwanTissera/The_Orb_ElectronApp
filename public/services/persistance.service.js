@@ -3,7 +3,10 @@ var app = angular.module('orb');
 app.service('PersistanceService', function() {
     const storage = require('node-persist');
 
+    let functionList = [];
+
     async function initStorage(path){
+
         /**
          * Deafault Path
          */
@@ -30,6 +33,10 @@ app.service('PersistanceService', function() {
             forgiveParseErrors: false
 
         })
+        //
+        // await this.storage.forEach(async function(datum) {
+        //     functionList.push(datum);
+        // })
     }
     /**
      * These methods provide Persistance
@@ -52,6 +59,14 @@ app.service('PersistanceService', function() {
         return storage.getItem(itemID);
     }
 
+    // async function getAllFunctions() {
+    //     this.storage.forEach(async function(datum) {
+    //         this.functionList.push(datum);
+    //     })
+    // }
+
+
+
     /**
      * Provides these services
      */
@@ -59,7 +74,9 @@ app.service('PersistanceService', function() {
         initStorage:initStorage,
         addData:addData,
         getValues:getValues,
-        getItem:getItem
+        getItem:getItem,
+        // getAllFunctions:getAllFunctions,
+        getfunctionList:functionList
     }
 
 });

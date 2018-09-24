@@ -9,6 +9,8 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
     var evaljs = require("evaljs");
     const perf = require('execution-time')();
 
+    PersistanceService.initStorage('functions');
+
 //code for editor
 
     const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
@@ -145,7 +147,6 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
         data.clientID = SocketService.getClientID;
 
-        PersistanceService.initStorage('functions');
         PersistanceService.addData(data.name,data).then(console.log(toastr.success('Function Saved !! ', "")));
 
 
@@ -277,6 +278,9 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
                 console.error(ex);
             }
         }
-
+    //
+    // $scope.allFuncs = PersistanceService.getfunctionList
+    //
+    // console.log('$$$$$$$$$', $scope.allFuncs);
 
 });
