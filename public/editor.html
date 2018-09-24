@@ -1,61 +1,126 @@
- <!--If you have special style-->
+<!--If you have special style-->
 <style>
     #code {
-      /*max-width: calc(70% - ??px);*/
-      /*max-width: calc(70% - ??px);*/
-      margin: 20px;
-      width: 75vw;
-      height: 35vh;
-      overflow-x: hidden;
-      border: 1px solid #ccc;
-      background: #ffffff;
-      word-wrap: break-word;
-      display: inline-flex;
+        /*max-width: calc(70% - ??px);*/
+        /*max-width: calc(70% - ??px);*/
+        /*margin: 10px;*/
+        width: 75vw;
+        height: 35vh;
+        overflow-x: hidden;
+        border: 1px solid #ccc;
+        background: #ffffff;
+        word-wrap: break-word;
+        display: inline-flex;
     }
 
     .CodeFlask .CodeFlask__textarea {
-      white-space: nowrap;
-      overflow-x: auto;
+        white-space: nowrap;
+        overflow-x: auto;
     }
 
     .CodeFlask__textarea {
     }
 
     /*.codeflask__flatten {*/
-      /*white-space: normal;*/
+    /*white-space: normal;*/
     /*}*/
 
-  </style>
+</style>
 
- <!--Include container-fluid here-->
- <div ng-controller="EditorController" class="container-fluid">
+<!--Include container-fluid here-->
+<div ng-controller="EditorController" class="container-fluid">
 
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
-      <li class="breadcrumb-item">
-        <a href="dashboard.html">Dashboard</a>
-      </li>
-      <li class="breadcrumb-item active">Inline Code Editor</li>
+        <li class="breadcrumb-item">
+            <a href="dashboard.html">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Inline Code Editor</li>
     </ol>
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="container-fluid">
 
+                <div class="row">
+                    <div class="col-md-8">
 
-    <div class="row">
+                        <div id="main" class="col-md-12">
+                            <!--<div style="padding: 20px" class="row">-->
+                            <!--<input style="margin: 10px" class="form-control col" ng-model="postFunc.name" type="text"-->
+                            <!--placeholder="Function Name"/>-->
+                            <!--<input style="margin: 10px" class="form-control col" ng-model="postFunc.id" type="text"-->
+                            <!--placeholder="Function ID (Auto-generated)"/>-->
+                            <!--</div>-->
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr><h6>Deploy Functions</h6></tr>
+                                <tr>
+                                    <td>
+                                        <input class="form-control col" ng-model="postFunc.name"
+                                               type="text" placeholder="Function Name"/>
+                                    </td>
+                                        <input class="form-control col"  ng-model="postFunc.id"
+                                               type="text"
+                                               placeholder="Function ID (Auto-generated)" hidden/>
+                                    <td>
+                                        <input class="form-control col"  ng-model="postFunc.desc"
+                                               type="text"
+                                               placeholder="Description"/>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-dark" id="deploy"
+                                                ng-click="postFunction(postFunc)"><i class="fa fa-send"></i> Deploy
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="col-md-12" id="code"></div>
+                            <div class="col-md-8">
+                                
 
-      <div id="main" class="col-12">
-          <div style="padding: 20px" class="row">
-              <input style="margin: 10px" class="form-control col" ng-model="postFunc.name" type="text" placeholder="Function Name"/>
-              <input style="margin: 10px" class="form-control col" ng-model="postFunc.id" type="text" placeholder="Function ID (Auto-generated)"/>
-          </div>
-        <div class="col-md-12" id="code"></div>
-        <div class="col-md-8">
-          <button style="margin: 10px" class="btn btn-success" id="save" onclick=""><i class="fa fa-save"></i>{{test}} Done Editing</button>
-          <button style="margin: 10px" class="btn btn-danger" id="obfuscate"><i class="fa fa-file-zip-o"></i> Obfuscate</button>
-          <!--<button style="margin: 10px" class="btn btn-danger" id="runcode"><i class="fa fa-send"></i> Run</button>-->
-          <button style="margin: 10px" class="btn btn-primary" id="deploy" ng-click="postFunction(postFunc)"><i class="fa fa-send"></i> Deploy</button>
-          <!--<button style="margin: 10px" class="btn btn-primary" ng-click="callFunction()" id="call"><i class="fa fa-send"></i> Call</button>-->
+                            </div>
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>Details</tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-hide="postFunc.id == null">
+                                    <td style="font-size:small">
+                                        Function #
+                                    </td>
+                                    <td>
+                                        <a style="font-size:small">{{postFunc.id}}</a>
+                                    </td>
+                                </tr>
+                                <tr ng-hide="postFunc.id == null">
+                                    <td style="font-size:small">
+                                        Security
+                                    </td>
+                                    <!--Jquery Execute-->
+                                    <td>
+                                        <a style="font-size:small" href="" id="obfuscate"><i
+                                                class="fa fa-file-zip-o"></i> View obfuscated code
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                       <!--
+                                       continue with the table
+                                       -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
 
- </div>
+</div>

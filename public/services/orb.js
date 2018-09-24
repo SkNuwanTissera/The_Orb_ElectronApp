@@ -3,11 +3,11 @@ var electron_remote = require('electron').remote;
 
 app.service('SocketService', function() {
 
-   var REQ_SERVICE = require('./request.service');
+    var REQ_SERVICE = require('./request.service');
 
     setTimeout(function () {
         console.log(REQ_SERVICE.SocUri());
-    },2000);
+    }, 2000);
 
     let clientid = "Orbapp4343rsr324ssdwewe23424234234324dfdf";
     let url = ''
@@ -23,7 +23,9 @@ app.service('SocketService', function() {
     // var IO = io('http://192.168.1.2:8000', { reconnect: true})
 
     // console.log("remote : "+electron_remote.getGlobal('sharedObj').url);
-    socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
+    // socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
+    socketClientWrapper('http://192.168.56.1:3000');
+
 
 
     function socketClientWrapper(ip) {
@@ -141,7 +143,8 @@ app.service('SocketService', function() {
         },
         getAnswer : getAns,
         setAnswer : setAns,
-        getFlist : getfList
+        getFlist : getfList,
+        getClientID : clientid
     }
 
     var answer;
@@ -167,4 +170,5 @@ app.service('SocketService', function() {
             }
         })
     }
+
 });

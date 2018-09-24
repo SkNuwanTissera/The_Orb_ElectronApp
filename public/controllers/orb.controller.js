@@ -4,6 +4,7 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
     $scope.answer="";
     $scope.func = {};
     let ans = null;
+    $scope.hideOutput=true;
 
     /**
      * Importing Context from Socket Connection
@@ -88,10 +89,7 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
     $scope.callFunction = async function (data) {
 
         try {
-
-
-
-            if(data.name != null ){
+            if(data.name != null && TempService.getParameterObject() != null){
                 data.params = TempService.getParameterObject();
                 console.log("################################");
                 console.log(data.params);
@@ -99,6 +97,8 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
                 console.log(data);
                 console.log("################################");
                 SocketService.callFunction(data);
+                $scope.hideOutput=false;
+
             //
             //     console.log(data.params)
             //     console.log(data.name)
