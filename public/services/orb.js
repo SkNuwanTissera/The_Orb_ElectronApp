@@ -5,10 +5,6 @@ app.service('SocketService', function() {
 
     var REQ_SERVICE = require('./request.service');
 
-    setTimeout(function () {
-        console.log(REQ_SERVICE.SocUri());
-    }, 2000);
-
     let clientid = "Orbapp4343rsr324ssdwewe23424234234324dfdf";
     let url = ''
     let fnObj = []
@@ -23,9 +19,19 @@ app.service('SocketService', function() {
     // var IO = io('http://192.168.1.2:8000', { reconnect: true})
 
     // console.log("remote : "+electron_remote.getGlobal('sharedObj').url);
-    // socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
-    socketClientWrapper('http://192.168.56.1:3000');
 
+    var check = function(){
+        if(electron_remote.getGlobal('sharedObj').url.length>1){
+            socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
+        }
+        else {
+            console.log('check super node cash');
+            REQ_SERVICE.Request();
+            setTimeout(check, 1000); // check again in a second
+        }
+    }
+
+    check();
 
 
     function socketClientWrapper(ip) {
@@ -82,6 +88,10 @@ app.service('SocketService', function() {
 
             IO.on('disconnect', function(){
                 console.log('Disconneted')
+                IO.disconnect();
+                electron_remote.getGlobal('sharedObj').url="";
+                REQ_SERVICE.resetSocUri();
+                check();
             });
 
             IO.on('heartbeat', function (data) {
@@ -170,5 +180,4 @@ app.service('SocketService', function() {
             }
         })
     }
-
 });
