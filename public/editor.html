@@ -59,10 +59,13 @@
                                         <input class="form-control col" ng-model="postFunc.name"
                                                type="text" placeholder="Function Name"/>
                                     </td>
-                                    <td>
-                                        <input class="form-control col" ng-model="postFunc.id"
+                                        <input class="form-control col"  ng-model="postFunc.id"
                                                type="text"
-                                               placeholder="Function ID (Auto-generated)"/>
+                                               placeholder="Function ID (Auto-generated)" hidden/>
+                                    <td>
+                                        <input class="form-control col"  ng-model="postFunc.desc"
+                                               type="text"
+                                               placeholder="Description"/>
                                     </td>
                                     <td>
                                         <button class="btn btn-outline-dark" id="deploy"
@@ -74,12 +77,7 @@
                             </table>
                             <div class="col-md-12" id="code"></div>
                             <div class="col-md-8">
-                                <button class="btn btn-outline-dark" id="save" onclick=""><i
-                                        class="fa fa-save"></i> Save
-                                </button>
-                                <button class="btn btn-outline-dark" id="obfuscate"><i
-                                        class="fa fa-file-zip-o"></i> Obfuscate
-                                </button>
+                                
 
                             </div>
                     </div>
@@ -90,8 +88,31 @@
                                 <tr>Details</tr>
                             </thead>
                             <tbody>
+                                <tr ng-hide="postFunc.id == null">
+                                    <td style="font-size:small">
+                                        Function #
+                                    </td>
+                                    <td>
+                                        <a style="font-size:small">{{postFunc.id}}</a>
+                                    </td>
+                                </tr>
+                                <tr ng-hide="postFunc.id == null">
+                                    <td style="font-size:small">
+                                        Security
+                                    </td>
+                                    <!--Jquery Execute-->
+                                    <td>
+                                        <a style="font-size:small" href="" id="obfuscate"><i
+                                                class="fa fa-file-zip-o"></i> View obfuscated code
+                                        </a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td></td>
+                                    <td></td>
+                                       <!--
+                                       continue with the table
+                                       -->
                                 </tr>
                             </tbody>
                         </table>

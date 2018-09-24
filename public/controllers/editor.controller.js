@@ -1,4 +1,4 @@
-angular.module('orb').controller('EditorController',function ($scope,SocketService, PaymentService) {
+angular.module('orb').controller('EditorController',function ($scope,SocketService, PaymentService,PersistanceService) {
    //import Js file
    //  require('../js/editor')
     var CodeFlask = require('codeflask');
@@ -8,30 +8,6 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
     var Interpreter = require('js-interpreter');
     var evaljs = require("evaljs");
     const perf = require('execution-time')();
-    // const axios = require('axios');
-    //
-    // let url = "http://localhost:3000";
-
-    storage.init({
-        dir: process.cwd() +'/core/storage/_persist',
-
-        stringify: JSON.stringify,
-
-        parse: JSON.parse,
-
-        encoding: 'utf8',
-
-        logging: false,  // can also be custom logging function
-
-        ttl: false, // ttl* [NEW], can be true for 24h default or a number in MILLISECONDS
-
-        expiredInterval: 2 * 60 * 1000, // every 2 minutes the process will clean-up the expired cache
-
-        // in some cases, you (or some other service) might add non-valid storage files to your
-        // storage dir, i.e. Google Drive, make this true if you'd like to ignore these files and not throw an error
-        forgiveParseErrors: false
-
-    })
 
 //code for editor
 
@@ -56,13 +32,14 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
             }
         );
 
-        toastr.success('Obfuscated!', "");
-        console.log("Obfuscated Code : " + obfuscationResult.getObfuscatedCode());
-        toastr.success('View the obfuscated code !! ', "")
-
-        toastr.options.onclick = function() {
+        if(obfuscationResult!=""){
+            console.log("Obfuscated Code : " ,obfuscationResult.getObfuscatedCode());
             swal("Obfuscated Code!", obfuscationResult.getObfuscatedCode());
         }
+        else{
+            toastr.warning("Please write the function first",{msg:'warning'});
+        }
+
 
     });
 
@@ -80,37 +57,17 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
      * @type {*|jQuery|HTMLElement}
      */
 
-    // var save = $('#save');
-    // var deploy = $('#deploy');
-    //
-    // save.click(function() {
-    //     addData(guid(),flask.getCode()).then(console.log(toastr.success('Saved !! ', "")));
-    // });
-    //
-    // deploy.click(function() {
-    //     addData(guid(),flask.getCode());
-    // });
+    var save = $('#save');
+    var deploy = $('#deploy');
 
-    /**
-     * These methods provide Persistance
-     * Key value store
-     *
-     * @param id
-     * @param data
-     * @returns {*}
-     */
+    save.click(function() {
+        addData(guid(),flask.getCode()).then(console.log(toastr.success('Saved !! ', "")));
+    });
 
-    function addData(id,data) {
-        return storage.setItem(id,data);
-    }
+    deploy.click(function() {
+        addData(guid(),flask.getCode());
+    });
 
-    function getValues () {
-        return storage.values();
-    }
-
-    function getItem() {
-        return storage.getItem('39c05122-476a-27d9-1cba-65dd76b9cc41');
-    }
 
     /**
      * Jquery
@@ -165,18 +122,32 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
      */
     $scope.postFunction = function (postFunc){
 
+        if(postFunc != null && flask.getCode() != "" ){
+
         var fid = guid(); //generate UUID for the function.
         postFunc.id = fid;
 
-        /**do some validation here**/
+        var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
 
-        if(postFunc.id == null || postFunc.name == null || flask.getCode() == null ){
-            swal("Error","Null parameters");
+        SocketService.postFunction(data);
+        toastr.success('Sucessfully Deployed to Orb!')
         }
 
-        var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
-        SocketService.postFunction(data);
-        swal("Sucessfull","Deployed to Orb!")
+        /**
+         * Save the function in database
+         * with additional meta-data | DATE | DESCRIPTION | USER_ID |
+         */
+
+        data.des = postFunc.desc;
+
+        var datetime = new Date();
+        data.timestap = datetime;
+
+        data.clientID = SocketService.getClientID;
+
+        PersistanceService.initStorage('functions');
+        PersistanceService.addData(data.name,data).then(console.log(toastr.success('Function Saved !! ', "")));
+
 
     }
 

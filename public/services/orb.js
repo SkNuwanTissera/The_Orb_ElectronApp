@@ -143,7 +143,8 @@ app.service('SocketService', function() {
         },
         getAnswer : getAns,
         setAnswer : setAns,
-        getFlist : getfList
+        getFlist : getfList,
+        getClientID : clientid
     }
 
     var answer;
