@@ -10,74 +10,90 @@
     <div class="col-md-12" id="code"></div>
     <div class="card mb-3">
         <div class="card-body">
-            <div ng-controller="PaymentController">
-                <form novalidate>
+            <div class="container-fluid">
+                    <div class="row">
 
-                    <table class="table table-responsive">
-                        <tbody>
-                        <tr>
-                            <td>
-                            <h6>Function Execution</h6>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><h6>Function Name</h6></td>
-                            <td>
-                                <select class="form-control" ng-click="populate()" ng-model="func.name">
-                                <option ng-repeat="x in funcs" value="{{x}}">{{x}}</option>
-                                </select>
-                            </td>
-                            <td>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
 
-                            </td>
-                            <td>
-                                Parameters
-                            </td>
-                            <td>
-                                <button class="btn btn-outline-dark"  ng-click="JSONpopupInput()">Insert</button><br>
-                            </td>
-                            <td>
-                                <button  type="button" ng-hide="myVar" class="btn btn-success btn-xs"><span class="badge">Accepted</span></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                        <div ng-controller="PaymentController">
+                            <form novalidate>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                    <tr>
+                                            <h6>Function Execution</h6>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" ng-click="populate()" ng-model="func.name">
+                                                <option value="" disabled selected hidden>Please Choose...</option>
+                                                <option ng-repeat="x in funcs" value="{{x}}">{{x}}</option>
+                                            </select>
+                                        </td>
+                                        <td>
 
-                    <!--Parameters :<br>-->
-                    <!--<input class="form-control" type="text" ng-model="func.params"> <br/>-->
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-outline-dark"  ng-click="JSONpopupInput()">Insert Parameters</button><br>
+                                        </td>
+                                        <td>
+                                            <button  type="button" ng-hide="myVar" class="btn btn-success btn-xs"><span class="badge">Accepted</span></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
+                                <!--Parameters :<br>-->
+                                <!--<input class="form-control" type="text" ng-model="func.params"> <br/>-->
 
-                    <table class="table table-responsive">
-                        <tbody>
-                            <tr>
-                                <td><h6>Operation Details</h6></td>
-                            </tr>
-                            <tr>
-                                <td>Cost per this request</td>
-                                <td>$ 0.00003</td>
-                            </tr>
-                            <tr>
-                                <td>Function Availability</td>
-                                <td><span class="badge">34%</span></td>
-                            </tr>
-                            <tr>
-                                <td>Function Health</td>
-                                <td><span class="badge">Medium</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <br/>
-                    <button class="btn btn-outline-dark"  id="checkCondition" ng-click="callFunction(func)">Status</button>
-                    <button class="btn btn-outline-dark" ng-click="callFunction(func)">Call Function | {{func.name}}</button>
-                </form><br/>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                    <tr>
+                                        <h6>Operation Details</h6>
+                                    </tr>
+                                    <tr>
+                                        <td>Cost per this request</td>
+                                        <td>$ 0.00003</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Function Availability</td>
+                                        <td><span class="badge">34%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Function Health</td>
+                                        <td><span class="badge">Medium</span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <br/>
+                                <button class="btn btn-outline-dark"  id="checkCondition" ng-click="callFunction(func)">Status</button>
+                                <button class="btn btn-outline-dark" ng-click="callFunction(func)">Call Function | {{func.name}}</button>
+                            </form><br/>
 
-                <h2>Answer : {{ans}}</h2>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td><h6>Output</h6></td>
+                                            <td><h6>Execution Time</h6></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody ng-hide="hideOutput">
+                                        <tr>
+                                            <td>{{ans}}</td>
+                                            <td>0.045 sec</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
-
 </div>
 
 <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
