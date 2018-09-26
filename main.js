@@ -13,7 +13,7 @@ const clientid = "OrbAppbdfjgffgdsg#RE%FGD$#dfghgfhDFfxcBBvcGfdGHT%$^#$DSFF"
 var ipcMain = require('electron').ipcMain;
 
 
-global.sharedObj = {url: ""};
+global.Url ="";
 
 
 looper();
@@ -23,13 +23,13 @@ function looper(){
 
     soc.Request();
 
-    global.sharedObj.url = soc.SocUri();
+    global.Url = soc.SocUri();
 
-    if(!global.sharedObj.url){
+    if(!global.Url){
         console.log('searching Super node Uri' )
         setTimeout(function () {
             console.log('Req : '+soc.SocUri());
-            global.sharedObj.url = soc.SocUri();
+            global.Url = soc.SocUri();
             looper();
         },500);
     }else{

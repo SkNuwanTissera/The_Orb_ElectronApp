@@ -21,8 +21,11 @@ app.service('SocketService', function() {
     // console.log("remote : "+electron_remote.getGlobal('sharedObj').url);
 
     var check = function(){
-        if(electron_remote.getGlobal('sharedObj').url.length>1){
-            socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
+
+        let uri = REQ_SERVICE.SocUri();
+        if(uri.length>0){
+            console.log("Remote Address :" +uri);
+                socketClientWrapper(uri);
         }
         else {
             console.log('check super node cash');
@@ -33,8 +36,11 @@ app.service('SocketService', function() {
 
     check();
 
+    // socketClientWrapper("http://192.168.1.4:8000")
 
     function socketClientWrapper(ip) {
+
+        console.log("Orb Service | socketClientWrapper | IP :"+ip.toString());
 
         IO = io(ip, { reconnect: true})
 
@@ -64,6 +70,8 @@ app.service('SocketService', function() {
                 funArr = fnsList
                 console.log('Function added to function list' );
             })
+
+
 
             IO.on('answer-seek', function (data, callback) {
                 console.log('============ Answering machine ============')
