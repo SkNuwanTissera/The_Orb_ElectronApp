@@ -55,23 +55,6 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
 
     /**
-     * code for json preparation and insert to db
-     * @type {*|jQuery|HTMLElement}
-     */
-
-    var save = $('#save');
-    var deploy = $('#deploy');
-
-    save.click(function() {
-        addData(guid(),flask.getCode()).then(console.log(toastr.success('Saved !! ', "")));
-    });
-
-    deploy.click(function() {
-        addData(guid(),flask.getCode());
-    });
-
-
-    /**
      * Jquery
      * Purpose : Dry run the code to see for compile errors
      * Event : Inline code editor
@@ -148,7 +131,6 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
         data.clientID = SocketService.getClientID;
 
         PersistanceService.addData(data.name,data).then(console.log(toastr.success('Function Saved !! ', "")));
-
 
     }
 

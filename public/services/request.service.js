@@ -6,7 +6,7 @@ var SocUri = "";
 module.exports = {
 
     Request : function () {
-        request('http://169.254.9.243:4500', function (error, response, body) {
+        request('http://192.168.1.9:4500', function (error, response, body) {
 
             if(!error){
                 obj = JSON.parse(body);
@@ -16,6 +16,7 @@ module.exports = {
                 //need to implement resolving algo
 
                 obj.forEach(data=>{
+                    console.log("Online Supernodes : "+data.uri)
                     if(latency<data.latency){
                         latency = data.latency;
                         uri = data.uri;
@@ -24,26 +25,14 @@ module.exports = {
 
                 if(uri.length>0){
                     console.log('resolve super node uri : '+uri);
-                    SocUri  = uri;
-
-                    try {
-                        electron_remote.getGlobal('sharedObj').url = SocUri;
-                    }catch (e) {
-                        console.log('request service | request function | exception : '+e.message);
-                    }
+                    SocUri  = uri.toString();
                 }else {
                     console.log('zero super nodes')
                 }
 
-
             }
         });
     },
-        SocUriGlobal:function () {
-            console.log('request service | Soc Uri Global Method | return: '+electron_remote.getGlobal('sharedObj').url);
-            return electron_remote.getGlobal('sharedObj').url;
-        }
-    ,
 
     SocUri : function () {
 
@@ -52,7 +41,6 @@ module.exports = {
         }else {
             console.log('zero super nodes')
         }
-
        return SocUri;
     },
 

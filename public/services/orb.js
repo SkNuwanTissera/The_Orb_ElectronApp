@@ -23,13 +23,29 @@ app.service('SocketService', function() {
     // var IO = io('http://192.168.1.2:8000', { reconnect: true})
 
     // console.log("remote : "+electron_remote.getGlobal('sharedObj').url);
-    // socketClientWrapper(electron_remote.getGlobal('sharedObj').url);
-    socketClientWrapper('http://192.168.56.1:3000');
+
+    socketClientWrapper("http://192.168.1.9:8000");
+
+    var check = function(){
+
+        let uri = REQ_SERVICE.SocUri();
+        if(uri.length>0){
+            console.log("Remote Address :" +uri);
+            socketClientWrapper(uri);
+        }
+        else {
+            console.log('check super node cash');
+            REQ_SERVICE.Request();
+            setTimeout(check, 1000); // check again in a second
+        }
+    }
+
+    // check();
 
 
 
     function socketClientWrapper(ip) {
-
+        console.log("Orb Service | socketClientWrapper | IP :"+ip.toString());
         IO = io(ip, { reconnect: true})
 
         IO.once('connect', function(){
