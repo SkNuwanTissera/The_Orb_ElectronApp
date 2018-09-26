@@ -13,7 +13,7 @@ const clientid = "OrbAppbdfjgffgdsg#RE%FGD$#dfghgfhDFfxcBBvcGfdGHT%$^#$DSFF"
 var ipcMain = require('electron').ipcMain;
 
 
-global.sharedObj = {url: null};
+global.sharedObj = {url: ""};
 
 
 looper();
