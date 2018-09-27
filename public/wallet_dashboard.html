@@ -161,14 +161,26 @@
                 <!--<br/>-->
             <div class="container-fluid">
                 <div class="row">
-                    <table class="table table-striped">
+                    <table class="table">
                         <tbody>
-                        <tr>
-                            <td style="text-align: right">
+                        <tr class="table-hover">
+                            <td style="text-align: center">
                                 <button class="btn btn-outline-dark" ng-click="testBalance()">Check Balance <i class="fa fa-refresh"></i> </button>
                             </td>
                             <td style="text-align: left">
                                <h4>{{mybal}} Wei</h4>
+                            </td>
+                        </tr>
+                        <tr class="table-success">
+                            <td>
+                                <h6>1 Orb Coin = 0.000000000000001 ETH </h6>
+                                <h6>1 Orb Coin = 0.000000001 Gwei, Shannon, Nanoether, Nano </h6>
+                                <h6>1 Orb Coin = 1000 Wei</h6>
+                            </td>
+                            <td>
+                                <h6>1 Orb Coin = 0.000000000000000001 Kether, Grand,Einstein</h6>
+                                <h6>1 Orb Coin = 0.000000000001 Finney, Milliether, Milli </h6>
+                                <h6>1 Orb Coin = 0.001 Mwei, Babbage, Picoether</h6>
                             </td>
                         </tr>
                         </tbody>
