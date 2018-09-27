@@ -124,47 +124,95 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <a>Dashboard</a>
             </li>
             <li class="breadcrumb-item active">Wallet</li>
         </ol>
-        <!-- Example DataTables Card-->
-        <div class="card mb-3">
-                <div class="row price-card-container">
 
-                    <div class="col-md-4 wow slideInLeft">
-                        <!--<div class="price-card">-->
-                            <div class="price-card-head">
-                                <p class="pg-name"><span>Total Coins</span><br/>On Subcription</p>
-                                <p class="pg-price"> {{coins}} <i class="fa fa-dollar-sign"></i></p>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 wow slideInLeft">
-                        <!--<div class="price-card">-->
-                            <div class="price-card-head">
-                                <p class="pg-name"><span>Total Rewards Gained</span><br/></p>
-                                <p class="pg-price">25 <i class="fa fa-dollar-sign"></i></p>
-                            <!--</div>-->
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 wow slideInLeft">
-                        <!--<div class="price-card">-->
-                            <div class="price-card-head">
-                                <p class="pg-name"><span>Coins Paid</span><br/></p>
-                                <p class="pg-price">{{coinspaid}} <i class="fa fa-dollar-sign"></i></p>
-                            </div>
+    <div class="card mb-3">
+        <div class="card-body">
+                <!--<div class="row">-->
+                    <!--<div class="col-md-4 wow slideInLeft">-->
+                            <!--<div class="price-card-head">-->
+                                <!--<p class="pg-name"><span>Total Coins</span><br/>On Subcription</p>-->
+                                <!--<p class="pg-price"> {{coins}} <i class="fa fa-dollar-sign"></i></p>-->
                         <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-4 wow slideInLeft">-->
+                        <!--&lt;!&ndash;<div class="price-card">&ndash;&gt;-->
+                            <!--<div class="price-card-head">-->
+                                <!--<p class="pg-name"><span>Total Rewards Gained</span><br/></p>-->
+                                <!--<p class="pg-price">25 <i class="fa fa-dollar-sign"></i></p>-->
+                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <!--<div class="col-md-4 wow slideInLeft">-->
+                        <!--&lt;!&ndash;<div class="price-card">&ndash;&gt;-->
+                            <!--<div class="price-card-head">-->
+                                <!--<p class="pg-name"><span>Coins Paid</span><br/></p>-->
+                                <!--<p class="pg-price">{{mybal}}<i class="fa fa-dollar-sign"></i></p>-->
+                                <!--<button class="btn btn-outline-light" ng-click="testBalance()">Check Balance</button>-->
+                            <!--</div>-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<br/>-->
+            <div class="container-fluid">
+                <div class="row">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td style="text-align: right">
+                                <button class="btn btn-outline-dark" ng-click="testBalance()">Check Balance <i class="fa fa-refresh"></i> </button>
+                            </td>
+                            <td style="text-align: left">
+                               <h4>{{mybal}} Wei</h4>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+
+
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Recipient Address</th>
+                                <th>Amount</th>
+                                <th>Transaction #</th>
+                            </tr>
+                            </thead>
+                            <tbody id="paymentsForDeploy">
+                            <tr><h6>Send Information</h6></tr>
+
+                            </tbody>
+                        </table>
                     </div>
 
-                    <button ng-controller="CoinController" class="btn btn-primary" ng-click="createWallet()"></button>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Sender Address</th>
+                                <th>Amount</th>
+                                <th>Transaction #</th>
+                            </tr>
+                            </thead>
+                            <tbody id="paymentsForCalling">
+                            <tr><h6>Received Information</h6></tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-
-
-
             </div>
         </div>
+</div>
 
 
 

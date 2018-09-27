@@ -2,6 +2,8 @@ var app = angular.module('orb');
 
 app.service('PersistanceService', function() {
     const storage = require('node-persist');
+    // const usedFns = storage.create({dir: 'Used', ttl: 3000});
+    // const deployedFns = storage.create({dir: 'deployed', ttl: 3000});
 
     let functionList = [];
 
@@ -13,7 +15,7 @@ app.service('PersistanceService', function() {
         if(path==null){
             path = '/core/storage/_persist/'
         }
-        await storage.init({
+        return await storage.init({
             dir: process.cwd() +'/.node-persist/'+path,
 
             stringify: JSON.stringify,
@@ -33,10 +35,7 @@ app.service('PersistanceService', function() {
             forgiveParseErrors: false
 
         })
-        //
-        // await this.storage.forEach(async function(datum) {
-        //     functionList.push(datum);
-        // })
+
     }
     /**
      * These methods provide Persistance
@@ -59,13 +58,27 @@ app.service('PersistanceService', function() {
         return storage.getItem(itemID);
     }
 
-    // async function getAllFunctions() {
-    //     this.storage.forEach(async function(datum) {
-    //         this.functionList.push(datum);
-    //     })
-    // }
+    async  function deployedList(id,storage_name){
+        var table1 = $('#'+id);
+        initStorage(storage_name).then(()=>{
+            storage.forEach(async function(datum) {
+                table1.append('<tr><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.to+'</td><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.value+'</td><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.transactionHash+'</td></tr>');
+            });
+        });
+    }
 
+    async  function calledList(id,storage_name){
+        var table2 = $('#'+id);
+        $("#"+id+ " tr").remove();
+        initStorage(storage_name).then(()=>{
+            storage.forEach(async function(datum) {
 
+                table2.append('<tr><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.to+'</td><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.value+'</td><td style="word-wrap: break-word;max-width: 150px;">'+datum.value.transactionHash+'</td></tr>');
+                // table.append('<tr scope="row"><td>'+datum.value.to+'</td><td style="max-width: 300px">'+datum.value.value+'</td><td>'+datum.value.transactionHash+'</td></tr>');
+            });
+            storage
+        });
+    }
 
     /**
      * Provides these services
@@ -75,8 +88,8 @@ app.service('PersistanceService', function() {
         addData:addData,
         getValues:getValues,
         getItem:getItem,
-        // getAllFunctions:getAllFunctions,
-        getfunctionList:functionList
+        deployedList : deployedList,
+        calledList : calledList
     }
 
 });

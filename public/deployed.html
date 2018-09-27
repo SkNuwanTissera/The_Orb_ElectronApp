@@ -146,7 +146,7 @@
         data.forEach(function (data) {
             console.log(data)
             var tem = '<button class="btn btn-sm btn-outline-success" onclick="httpPost(\'' + data['destinationClientId']+ '\')">call</button>';
-            table.append('<tr scope="row">' +
+            end('<tr scope="row">' +
                 '<th>'+data['destinationClientId']+'</th>' +
                 '<th>'+data['destinationSocketId']+'</th>' +
                 '<th>'+data['id']+'</th>' +

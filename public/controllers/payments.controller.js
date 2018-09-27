@@ -1,4 +1,4 @@
-angular.module('orb').controller('PaymentController',function ($scope,SocketService,PaymentService,TempService) {
+angular.module('orb').controller('PaymentController',function ($scope,SocketService,PaymentService,TempService,Web3Service,PersistanceService) {
     let storage = require('node-persist');
     var jsonfy = require('jsonfy');
     var Interpreter = require('js-interpreter');
@@ -11,38 +11,6 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
     // const flask = new CodeFlask('#code', { language: 'js' ,lineNumbers: true});
 
     var table = $('#table');
-
-    storage.init({
-        //initiate the persist object ( the function deployed as a object)
-        dir: process.cwd() +'/core/storage/_persist',
-
-
-        stringify: JSON.stringify,
-
-        parse: JSON.parse,
-
-        encoding: 'utf8',
-
-        logging: false,  // can also be custom logging function
-
-        ttl: false, // ttl* [NEW], can be true for 24h default or a number in MILLISECONDS
-
-        expiredInterval: 2 * 60 * 1000, // every 2 minutes the process will clean-up the expired cache
-
-        // in some cases, you (or some other service) might add non-valid storage files to your
-        // storage dir, i.e. Google Drive, make this true if you'd like to ignore these files and not throw an error
-        forgiveParseErrors: false
-
-    }).then(()=>{
-        // SocketService.setAnswer(storage);
-        // $scope.rowData=null;
-        storage.forEach(async function(datum) {
-            // $scope.rowData.push(datum);
-            table.append('<tr scope="row"><td>'+datum.key+'</td><td style="max-width: 300px">'+datum.value+'</td></tr>');
-        });
-    });
-
-    // $scope.rowdata=SocketService.getAnswer()
 
     var check = $('#check');
     check.click(function() {
@@ -231,8 +199,24 @@ angular.module('orb').controller('PaymentController',function ($scope,SocketServ
              })
          }
          $scope.myVar=false;
-
      }
+
+    PersistanceService.deployedList("paymentsForDeploy","deployed");
+    PersistanceService.calledList("paymentsForCalling","Used");
+
+    $scope.mybal = Web3Service.getPrevBal();
+
+    $scope.testBalance=function () {
+            checkBalance();
+    }
+
+    function checkBalance(){
+        Web3Service.getBalance().then(function (bal) {
+            $scope.mybal = bal;
+        });
+    }
+
+    $scope.CostPfunction = (Math.random() * (0.0120 - 0.00200) + 0.00200).toFixed(4);
 
 
 });

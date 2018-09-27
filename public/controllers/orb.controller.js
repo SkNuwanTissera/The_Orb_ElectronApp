@@ -1,10 +1,13 @@
-angular.module('orb').controller('orbController', async function ($scope, SocketService,TempService) {
+angular.module('orb').controller('orbController', async function ($scope, SocketService,TempService,Web3Service,PersistanceService) {
 
     let list = null;
     $scope.answer="";
     $scope.func = {};
     let ans = null;
     $scope.hideOutput=true;
+    var pbar2 = $('#progressAA');
+    pbar2.hide();
+
 
     /**
      * Importing Context from Socket Connection
@@ -39,7 +42,8 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
         soc.emit('flist', { socketId: soc.id}, function (data) {
             if(data) {
                 console.log({'type':'flist','data':data});
-                data = data.map(data => data.name)
+                $scope.funcsBody = data;
+                    data = data.map(data => data.name)
                     .filter((value, index, self) => self.indexOf(value) === index);
                 console.log(data)
                 $scope.funcs = data
@@ -90,6 +94,7 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
 
         try {
             if(data.name != null && TempService.getParameterObject() != null){
+                pbar2.show();
                 data.params = TempService.getParameterObject();
                 console.log("################################");
                 console.log(data.params);
@@ -98,6 +103,24 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
                 console.log("################################");
                 SocketService.callFunction(data);
                 $scope.hideOutput=false;
+
+                var dfaas2 = "0xB03F3583398e9DF1799C65Bd095dD666Bba17Dc4";
+                var X = (Math.random() * (0.120 - 0.0200) + 0.0200).toFixed(4);
+
+                Web3Service.sendCoins(dfaas2,X).then(function (hash) {
+                    console.log("$$$$PAID$$$$",hash);
+
+                    /**
+                     * Adding Trans. amount hash
+                     */
+                    hash.value=X;
+                    hash.funcName = data.name;
+                    hash.funcParams = data.params;
+                    PersistanceService.initStorage("Used")
+                    PersistanceService.addData(hash.transactionHash,hash).then(console.log(toastr.success('Transaction Saved !! ', "")));
+                    pbar2.hide();
+                    toastr.success('Sucessfully called !!');
+                });
 
             //
             //     console.log(data.params)
@@ -159,6 +182,12 @@ angular.module('orb').controller('orbController', async function ($scope, Socket
 
         return fullArray;
     }
+
+    $scope.loadUsedFns = function () {
+        PersistanceService.calledList("paymentsForCalling","Used");
+    }
+
+
 
 
 

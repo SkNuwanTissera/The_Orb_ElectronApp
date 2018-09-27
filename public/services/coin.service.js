@@ -2,7 +2,12 @@ var app = angular.module('orb');
 
 app.service('CoinService', function() {
 
-    let myWallet = new EthereumWallet('https://mainnet.infura.io/v3/532b4a8a9f4843afb1ac59e0ae3bb297')
+    /**
+     * Connected to Rinkeby
+     * @type {EthereumWallet}
+     */
+
+    let myWallet = new EthereumWallet('https://rinkeby.infura.io/v3/532b4a8a9f4843afb1ac59e0ae3bb297')
 
     /**
      * If your wallet hasn't been created yet, it's needed to create it.
@@ -13,6 +18,7 @@ app.service('CoinService', function() {
         if (await myWallet.hasKeystore) {
             // wallet exists
         } else {
+            await myWallet.init();
             let seed = myWallet.generateSeed();
             let password = 'orb123' // choose one
             await myWallet.createKeystore(password, seed)

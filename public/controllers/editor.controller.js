@@ -1,6 +1,6 @@
-angular.module('orb').controller('EditorController',function ($scope,SocketService, PaymentService,PersistanceService) {
-   //import Js file
-   //  require('../js/editor')
+angular.module('orb').controller('EditorController',function ($scope,SocketService,PaymentService,PersistanceService,Web3Service) {
+    //import Js file
+    //  require('../js/editor')
     var CodeFlask = require('codeflask');
     const storage = require('node-persist');
     const swal = require('sweetalert');
@@ -9,7 +9,10 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
     var evaljs = require("evaljs");
     const perf = require('execution-time')();
 
-    PersistanceService.initStorage('functions');
+    var pbar1 = $('#progressBX');
+    // var pbar2 = $('#progressAA');
+    pbar1.hide();
+    // pbar2.hide();
 
 //code for editor
 
@@ -109,13 +112,40 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
         if(postFunc != null && flask.getCode() != "" ){
 
-        var fid = guid(); //generate UUID for the function.
-        postFunc.id = fid;
+            pbar1.show();
 
-        var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
+            var fid = guid(); //generate UUID for the function.
+            postFunc.id = fid;
 
-        SocketService.postFunction(data);
-        toastr.success('Sucessfully Deployed to Orb!')
+            var data = {id :postFunc.id, name: postFunc.name, fnc: flask.getCode().toString()}
+
+            /**
+             * charge for Deployment and host
+             */
+
+            var isPaid = false;
+
+            // Promise
+            var readyForDeployment = new Promise(
+                function (resolve, reject) {
+                    if (isPaid) {
+                        var reason = new Error('You have already paid for this');
+                        reject(reason); // reject
+                    } else {
+                        resolve(PayForDeploy()); // fulfilled
+                    }
+
+                }
+            );
+
+            readyForDeployment.then(function () {
+
+                SocketService.postFunction(data);
+
+
+
+            })
+
         }
 
         /**
@@ -130,9 +160,12 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
         data.clientID = SocketService.getClientID;
 
+        PersistanceService.initStorage('functions');
         PersistanceService.addData(data.name,data).then(console.log(toastr.success('Function Saved !! ', "")));
 
     }
+
+
 
     /**
      * Pay when deploying.
@@ -140,33 +173,34 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
      * User is charged in this.
      * @function
      */
-    $scope.PayForDeploy=function () {
+    function PayForDeploy(){
         var threshold = 100;
-            perf.start();
-            for(var i =1; i<threshold; i++){
-                var myInterpreter = new Interpreter(flask.getCode());
+        perf.start();
+        for(var i =1; i<threshold; i++){
+            var myInterpreter = new Interpreter(flask.getCode());
+        }
+        //at end of your code
+        const results = perf.stop();
+        var etime = results.time/threshold
+        PaymentService.setetime(etime);
+
+        //calculate price
+        console.log(calculatePrice(etime)+ " Coins");
+
+        //showMessage(results.time);
+        console.log("execution time "+ etime +" ms");  // in milliseconds
+        swal({
+            title: "Confirm Paying ?",
+            text: "\"This function costs "+calculatePrice(etime)+" coins per request based on complexity.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+                PayForFunction(calculatePrice(etime));
+                return true;
             }
-            //at end of your code
-            const results = perf.stop();
-            var etime = results.time/threshold
-            PaymentService.setetime(etime);
-
-            //calculate price
-            console.log(calculatePrice(etime)+ " Coins");
-
-            //showMessage(results.time);
-            console.log("execution time "+ etime +" ms");  // in milliseconds
-            swal({
-                title: "Confirm Paying ?",
-                text: "\"This function costs "+calculatePrice(etime)+" coins per request based on complexity.",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then((willDelete) => {
-                if (willDelete) {
-                    PayForFunction(calculatePrice(etime));
-                }
-            });
+        });
     }
 
 
@@ -219,18 +253,24 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
 
     function PayForFunction(X) {
 
+        /**
+         * Dfaas accounts
+         */
+        var dfaas2 = "0xB03F3583398e9DF1799C65Bd095dD666Bba17Dc4";
 
-        var qw = PaymentService.getcoins()- X;
-        if(PaymentService.getcoins()>0){
-            PaymentService.setcoins(qw);
-            $scope.coins=(Math.round(PaymentService.getcoins()*100)/100);
-            swal("You paid for the function !", {
-                icon: "success",
-            });
-        }
-        else{
-            swal("You need to recharge your wallet")
-        }
+        Web3Service.sendCoins(dfaas2,X).then(function (hash) {
+            console.log("$$$$PAID$$$$",hash);
+
+            /**
+             * Adding Trans. amount hash
+             */
+            hash.value=X;
+            pbar1.hide();
+            //PersistanceService.initStorage("deployed");
+            //PersistanceService.addData(hash.transactionHash,hash).then(console.log(toastr.success('Transaction Saved !! ', "")));
+            toastr.success('Successfully Paid & Deployed to Orb!');
+
+        });
 
     }
 
@@ -239,30 +279,36 @@ angular.module('orb').controller('EditorController',function ($scope,SocketServi
      *  parse JSON files
      * @type {fibonacci}
      */
-        let x = (
-            function fibonacci(n, output) {
-                var a = 1, b = 1, sum;
-                for (var i = 0; i < n; i++) {
-                    output.push(a);
-                    sum = a + b;
-                    a = b;
-                    b = sum;
-                }});
+    let x = (
+        function fibonacci(n, output) {
+            var a = 1, b = 1, sum;
+            for (var i = 0; i < n; i++) {
+                output.push(a);
+                sum = a + b;
+                a = b;
+                b = sum;
+            }});
 
-        var str = x.toString();
+    var str = x.toString();
 
-        function parseJSON(str) {
-            try
-            {
-                var obj = JSON.parse(str);// this is how you parse a string into JSON
-                console.log("data"+obj.fdata);
-            } catch (ex) {
-                console.error(ex);
-            }
+    function parseJSON(str) {
+        try
+        {
+            var obj = JSON.parse(str);// this is how you parse a string into JSON
+            console.log("data"+obj.fdata);
+        } catch (ex) {
+            console.error(ex);
         }
+    }
+
+    // $scope.mybal = 40;
+    // testBalance();
     //
-    // $scope.allFuncs = PersistanceService.getfunctionList
-    //
-    // console.log('$$$$$$$$$', $scope.allFuncs);
+    // function testBalance() {
+    //     Web3Service.init();
+    //     $scope.mybal = Web3Service.getBalance();
+    //     console.log('########## BALANCE ###############',Web3Service.getBalance());
+    // }
+
 
 });
